@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxMoveSpeed = 5.5f;
     [SerializeField] private float minMoveSpeed = 0.5f;
     [SerializeField] private float gravity;
-    int direction;
+    float direction;
     float moveSpeed = 5.5f;
 
     [Header("Jumping")]
@@ -23,7 +23,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int maxJumps = 1;
     float jumpForce;
     int jumpCounter;
-    
+    private bool isOnGround = true;
+
+
+    [Header("Collectible")]
+
+    private int collectibleCount;
+    private UiManager collectibleUI;
+    public Sprite standing;
+    public Sprite walking;
+
+
 
     //float maxJumpVelocity;
     //float minJumpVelocity;
@@ -32,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Rigidbody2D body;
 
-    
+
 
     #endregion
 
@@ -43,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         body = GetComponent<Rigidbody2D>();
+        collectibleUI = GameObject.Find("CollectibleCanvas").GetComponent<UiManager>();
 
         gravity = -(2 * maxJumpHeight) / timeToJumpApex;
         jumpForce = (Mathf.Abs(gravity) * timeToJumpApex);
@@ -59,51 +70,55 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
-
         GetInput();
-
-
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCounter < maxJumps)
+        if (Input.GetKeyDown(KeyCode.Space) && (isOnGround || jumpCounter < maxJumps))
         {
-            if (jumpCounter == 0)
-            {
-                moveSpeed /= Globals.SLOW_ON_JUMP;
-
-            }
+            //add double jump with jumpCounter
             jumpCounter++;
             body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            
-
+            isOnGround = false;
         }
-
+        changeSprite();
         ApplyMovement();
     }
 
     private void GetInput()
     {
 
-        direction = Input.GetKeyDown(KeyCode.D) ? 1 : Input.GetKeyDown(KeyCode.A) ? -1 : direction;
+        direction = Input.GetAxis("Horizontal");
 
-        if ((Input.GetKeyUp(KeyCode.D) && direction == 1) || (Input.GetKeyUp(KeyCode.A) && direction == -1)) direction = 0;
+    }
 
-
+    public void changeSprite()
+    {
+        spriteRenderer.sprite = direction != 0 ? walking : standing;
+        spriteRenderer.flipX = direction < 0 ? true : false;
     }
 
     private void ApplyMovement()
     {
-
-        spriteRenderer.flipX = direction < 0 ? true : false;
-
-        transform.Translate((Vector3.right* direction * Time.deltaTime)  *  moveSpeed);
-        
+        transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
     }
 
-    void OnCollisionEnter2D(Collision2D Col)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if (Col.gameObject.tag == Globals.GROUND_TAG)
+        if (col.gameObject.CompareTag(Globals.GROUND_TAG))
         {
             jumpCounter = 0;
+            isOnGround = true;
         }
     }
+    //trigger to not create collision bug with collectible
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag(Globals.COLLECTIBLE_TAG))
+        {
+            Destroy(other.gameObject);
+            collectibleCount++;
+            collectibleUI.UpdateCollectible(collectibleCount);
+
+        }
+    }
+
 
 }

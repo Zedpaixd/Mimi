@@ -62,3 +62,4 @@ crashlytics-build.properties
 /Assets/Bakery
 /Assets/Editor/x64
 /Assets/Editor/x64.meta
+*.rar

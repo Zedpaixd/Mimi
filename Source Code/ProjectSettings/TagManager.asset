@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Background
   - Ground
+  - collectible
   layers:
   - Default
   - TransparentFX
@@ -14,13 +14,13 @@ TagManager:
   - Water
   - UI
   - 
-  - Background
   - 
   - 
-  - Objects
   - 
   - 
-  - Player
+  - 
+  - 
+  - 
   - 
   - 
   - 
