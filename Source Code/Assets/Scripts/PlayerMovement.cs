@@ -93,15 +93,6 @@ public class PlayerMovement : MonoBehaviour
 
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
 
-        if (direction < 0)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (direction > 0) //not >=0
-        {
-            spriteRenderer.flipX = false;
-        }
-
     }
 
     void OnCollisionEnter2D(Collision2D col)
