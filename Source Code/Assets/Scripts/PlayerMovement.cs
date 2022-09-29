@@ -30,8 +30,6 @@ public class PlayerMovement : MonoBehaviour
 
     private int collectibleCount;
     private UiManager collectibleUI;
-    public Sprite standing;
-    public Sprite walking;
 
 
 
@@ -78,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
         }
-        changeSprite();
+
         ApplyMovement();
     }
 
@@ -89,15 +87,21 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void changeSprite()
-    {
-        spriteRenderer.sprite = direction != 0 ? walking : standing;
-        spriteRenderer.flipX = direction < 0 ? true : false;
-    }
-
     private void ApplyMovement()
     {
+
+
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
+
+        if (direction < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (direction > 0) //not >=0
+        {
+            spriteRenderer.flipX = false;
+        }
+
     }
 
     void OnCollisionEnter2D(Collision2D col)

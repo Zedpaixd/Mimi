@@ -7,6 +7,7 @@ public static class Globals
     #endregion
 
     #region input
+    public static string HORIZONTAL_AXIS = "Horizontal";
     #endregion
 
     #region magic numbers
