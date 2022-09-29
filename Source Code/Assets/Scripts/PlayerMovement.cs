@@ -25,22 +25,23 @@ public class PlayerMovement : MonoBehaviour
     int jumpCounter;
     private bool isOnGround = true;
 
-
     [Header("Collectible")]
 
     private int collectibleCount;
     private UiManager collectibleUI;
 
+    [Header("Player")]
 
-
-    //float maxJumpVelocity;
-    //float minJumpVelocity;
-
+    public static PlayerMovement instance;
     Animator animator;
     SpriteRenderer spriteRenderer;
     Rigidbody2D body;
 
 
+    private void Awake()
+    {
+        instance = this;
+    }
 
     #endregion
 
@@ -76,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
             body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
         }
-
+        animateCharacter();
         ApplyMovement();
     }
 
@@ -87,20 +88,21 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public float GetDirection()
+    {
+        return direction;
+    }
+    private void animateCharacter()
+    {
+        //spriteRenderer.sprite = direction != 0 ? walkingSprite : standingSprite;
+        spriteRenderer.flipX = direction < 0 ? true : false;
+    }
+
     private void ApplyMovement()
     {
-
+        
 
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
-
-        if (direction < 0)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (direction > 0) //not >=0
-        {
-            spriteRenderer.flipX = false;
-        }
 
     }
 
