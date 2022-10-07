@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
     private void GetInput()
     {
 
-        direction = Input.GetAxis("Horizontal");
+        direction = Input.GetAxisRaw("Horizontal");
 
     }
 
