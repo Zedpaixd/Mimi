@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity;
     float direction;
     float moveSpeed = 5.5f;
+    int _layerMask;
 
     [Header("Jumping")]
     [SerializeField] private float maxJumpHeight = 2.5f;
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D body;
 
 
+
     private void Awake()
     {
         instance = this;
@@ -57,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
         gravity = -(2 * maxJumpHeight) / timeToJumpApex;
         jumpForce = (Mathf.Abs(gravity) * timeToJumpApex);
 
+        _layerMask = LayerMask.GetMask(Globals.OBJECT_LAYER);
+
 
         /*                                                                              // Maybe for some
         maxJumpVelocity = (Mathf.Abs(gravity) * timeToJumpApex)/2;                     // other time :)
@@ -70,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
         GetInput();
-        if (Input.GetKeyDown(KeyCode.Space) && (isOnGround || jumpCounter < maxJumps))
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && jumpCounter < maxJumps)  // why was it isonground || jC<mJ?
         {
             //add double jump with jumpCounter
             jumpCounter++;
@@ -78,14 +82,13 @@ public class PlayerMovement : MonoBehaviour
             isOnGround = false;
         }
         animateCharacter();
+        WallCheck();
         ApplyMovement();
     }
 
     private void GetInput()
     {
-
         direction = Input.GetAxis("Horizontal");
-
     }
 
     public float GetDirection()
@@ -98,19 +101,26 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer.flipX = direction < 0 ? true : false;
     }
 
+    private void WallCheck()
+    {
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, 0.365f, _layerMask);         // update the 0.365f value
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, 0.365f, _layerMask);          // once we determine Mimi's final size
+        if ((hitRight.collider != null && direction > 0) || (hitLeft.collider != null && direction < 0))  //this is ugly code; better way?
+        {
+            direction = 0;
+        }
+    }
+
     private void ApplyMovement()
     {
-        
-
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
-
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag(Globals.GROUND_TAG))
         {
-            jumpCounter = 0;
+            jumpCounter = body.velocity.y < 0.15f ? 0 : 1;
             isOnGround = true;
         }
     }
