@@ -15,4 +15,10 @@ public static class Globals
     public static int DELTA_SMOOTHENING = 5;
 
     #endregion
+
+    #region layers
+
+    public static string OBJECT_LAYER = "Object";
+
+    #endregion
 }
