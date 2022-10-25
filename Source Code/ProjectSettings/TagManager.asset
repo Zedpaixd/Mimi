@@ -6,19 +6,18 @@ TagManager:
   tags:
   - Ground
   - collectible
-  - UI_Assistant
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Object
+  - 
   - Water
   - UI
   - 
   - 
   - 
   - 
-  - Epilogue
+  - 
   - 
   - 
   - 
