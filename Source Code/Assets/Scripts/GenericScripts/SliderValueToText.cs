@@ -19,7 +19,6 @@ public class SliderValueToText : MonoBehaviour
 
 
         textSliderValue.transform.localPosition = sliderUI.handleRect.localPosition ;
-        textSliderValue.transform.position+=new Vector3(0,0,20);
     }
 
     public void ShowSliderValue()
