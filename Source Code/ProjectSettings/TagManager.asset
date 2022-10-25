@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - collectible
+  - UI_Assistant
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Epilogue
   - 
   - 
   - 

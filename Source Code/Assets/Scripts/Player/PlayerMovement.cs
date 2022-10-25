@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     float direction;
     float moveSpeed = 5.5f;
     int _layerMask;
+    public bool canMove;
 
     [Header("Jumping")]
     [SerializeField] private float maxJumpHeight = 2.5f;
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
         _layerMask = LayerMask.GetMask(Globals.OBJECT_LAYER);
 
-
+        animateCharacter();
         /*                                                                              // Maybe for some
         maxJumpVelocity = (Mathf.Abs(gravity) * timeToJumpApex)/2;                     // other time :)
         minJumpVelocity = (Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight))/2;
@@ -72,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (canMove)
+        {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
         GetInput();
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround && jumpCounter < maxJumps)  // why was it isonground || jC<mJ?
@@ -84,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
         animateCharacter();
         WallCheck();
         ApplyMovement();
+        }
+        
     }
 
     private void GetInput()
