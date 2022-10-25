@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
             isOnGround = true;
         }
     }
-    //trigger to not create collision bug with collectible
+    //Trigger to not create collision bug with collectible
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag(Globals.COLLECTIBLE_TAG))
@@ -115,6 +115,11 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
             collectibleCount++;
             collectibleUI.UpdateCollectible(collectibleCount);
+        }
+
+        if (other.gameObject.CompareTag(Globals.SECRET_AREA_TAG))
+        {
+            Destroy(other.gameObject);
         }
     }
 }
