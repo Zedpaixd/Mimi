@@ -16,6 +16,11 @@ public class SettingController : MonoBehaviour
     private float musicVolume;
     private float sfxVolume;
 
+    public void isVisible(bool visible)
+    {
+        gameObject.SetActive(visible);
+
+    }
 
     //dynamic float
     public void MusicVolume(float volume)
@@ -41,7 +46,7 @@ public class SettingController : MonoBehaviour
 
     public void SaveButton()
     {
-        Debug.Log(sfxVolume+"  "+musicVolume);
+        Debug.Log(sfxVolume + "  " + musicVolume);
         GameSaveInfo.updateSfxVolume(sfxVolume);
         GameSaveInfo.updateMusicVolume(musicVolume);
     }
