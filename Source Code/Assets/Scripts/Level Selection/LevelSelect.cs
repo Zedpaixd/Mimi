@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
-    public void StartLevelX()
+    public static void StartLevel(string level, MonoBehaviour instance)
     {
-        StartCoroutine(loadLevelAsync("Level X"));
+        instance.StartCoroutine(loadLevelAsync(level));
     }
 
     public void Back()
@@ -15,7 +15,7 @@ public class LevelSelect : MonoBehaviour
         StartCoroutine(loadLevelAsync(SceneManager.GetActiveScene().buildIndex - 1));
     }
 
-    IEnumerator loadLevelAsync(int index)
+    static IEnumerator loadLevelAsync(int index)
     {
         AsyncOperation asyncOp = SceneManager.LoadSceneAsync(index);
         //disable auto activation of new scene
@@ -38,7 +38,7 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
-    IEnumerator loadLevelAsync(string sceneName)
+    static IEnumerator loadLevelAsync(string sceneName)
     {
         AsyncOperation asyncOp = SceneManager.LoadSceneAsync(sceneName);
         //disable auto activation of new scene

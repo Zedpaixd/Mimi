@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
         GetInput();
-        
+
         animateCharacter();
         WallCheck();
 
@@ -96,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Color.green);
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Color.green);
     }
+
 
     private void GetInput()
     {
@@ -112,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
          * spriteRenderer.sprite = direction != 0 ? walkingSprite : standingSprite;
          *      spriteRenderer.flipX = direction < 0 ? true : false;
          */
-        
+
         flipPlayer(armatureComponent);
     }
 
@@ -147,7 +148,6 @@ public class PlayerMovement : MonoBehaviour
             body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
         }
-
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
     }
 
