@@ -6,12 +6,11 @@ TagManager:
   tags:
   - Ground
   - collectible
-  - SecretArea
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Object
   - Water
   - UI
   - 
