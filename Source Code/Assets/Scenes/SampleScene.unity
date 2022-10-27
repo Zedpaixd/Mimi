@@ -12096,6 +12096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e53e0da2d8613e45b31e289c80b8474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiText: {fileID: 2019722595}
 --- !u!114 &988309537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15351,25 +15352,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &1256861400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1256861392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b37ca2899323740a218011e09b4b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxMoveSpeed: 5.5
-  minMoveSpeed: 0.5
-  gravity: 0
-  maxJumpHeight: 2.5
-  minJumpHeight: 4
-  timeToJumpApex: 0.6
-  maxJumps: 1
 --- !u!4 &1261183698 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9067000385806391132, guid: e5adb4a2d23dc374d829674fe206fc44, type: 3}
