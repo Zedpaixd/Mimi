@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -830,9 +830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9785634de3900d64c8e7c7ef3e93d7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  dampingTime: 0.25
-  PPU: 64
 --- !u!1 &1090267113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,7 +1272,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1256861392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b37ca2899323740a218011e09b4b71, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e2e9ed40c7d3fc45b58f59cf03fe71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveSpeed: 5.5
@@ -1396,7 +1393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf1541737a41314f91be25298ca753e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 4
 --- !u!1 &1427656417
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,6 +1748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e53e0da2d8613e45b31e289c80b8474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiText: {fileID: 1220021757}
 --- !u!1 &1905707816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,7 +1830,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905707816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.9, y: 3.2, z: 0}
+  m_LocalPosition: {x: -2.26, y: 0.21, z: 0}
   m_LocalScale: {x: 0.505, y: 1.4536892, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
