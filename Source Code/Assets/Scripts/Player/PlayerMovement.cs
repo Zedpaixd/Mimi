@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
+using DragonBones;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     float direction;
     float moveSpeed = 5.5f;
     int _layerMask;
+    bool canMove = true;
 
     [Header("Jumping")]
     [SerializeField] private float maxJumpHeight = 2.5f;
@@ -34,9 +36,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player")]
 
     public static PlayerMovement instance;
-    Animator animator;
-    SpriteRenderer spriteRenderer;
+    /*
+     * Animator animator;
+     * SpriteRenderer spriteRenderer;
+     */
     Rigidbody2D body;
+    private UnityArmatureComponent armatureComponent;
+    private bool facingRight;
 
 
 
@@ -47,12 +53,16 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    /*private void OnPreRender()
+    {
+        canMove = true;
+    }*/
 
     private void Start()
     {
         jumpCounter = 0;
-        animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        //        animator = GetComponent<Animator>();
+        //        spriteRenderer = GetComponent<SpriteRenderer>();
         body = GetComponent<Rigidbody2D>();
         collectibleUI = GameObject.Find("CollectibleCanvas").GetComponent<UiManager>();
 
@@ -60,6 +70,8 @@ public class PlayerMovement : MonoBehaviour
         jumpForce = (Mathf.Abs(gravity) * timeToJumpApex);
 
         _layerMask = LayerMask.GetMask(Globals.OBJECT_LAYER);
+
+        armatureComponent = GetComponent<UnityArmatureComponent>();
 
 
         /*                                                                              // Maybe for some
@@ -74,16 +86,15 @@ public class PlayerMovement : MonoBehaviour
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
         GetInput();
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && jumpCounter < maxJumps)  // why was it isonground || jC<mJ?
-        {
-            //add double jump with jumpCounter
-            jumpCounter++;
-            body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            isOnGround = false;
-        }
+        
         animateCharacter();
         WallCheck();
-        ApplyMovement();
+
+        if (canMove)
+            ApplyMovement();
+
+        Debug.DrawRay(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Color.green);
     }
 
     private void GetInput()
@@ -97,15 +108,30 @@ public class PlayerMovement : MonoBehaviour
     }
     private void animateCharacter()
     {
-        //spriteRenderer.sprite = direction != 0 ? walkingSprite : standingSprite;
-        spriteRenderer.flipX = direction < 0 ? true : false;
+        /*
+         * spriteRenderer.sprite = direction != 0 ? walkingSprite : standingSprite;
+         *      spriteRenderer.flipX = direction < 0 ? true : false;
+         */
+        
+        flipPlayer(armatureComponent);
+    }
+
+    private void flipPlayer(UnityArmatureComponent armatureComponent)
+    {
+        if ((direction < 0 && !facingRight) || (direction > 0 && facingRight))
+        {
+            facingRight = !facingRight;
+            armatureComponent.armature.flipX = !armatureComponent.armature.flipX;
+        }
     }
 
     private void WallCheck()
     {
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, 0.365f, _layerMask);         // update the 0.365f value
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, 0.365f, _layerMask);          // once we determine Mimi's final size
-        if ((hitRight.collider != null && direction > 0) || (hitLeft.collider != null && direction < 0))  //this is ugly code; better way?
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);
+        RaycastHit2D hitRightUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);
+        RaycastHit2D hitLeftUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);
+        if (((hitRight.collider != null || hitRightUp.collider != null) && direction > 0) || ((hitLeft.collider != null || hitLeftUp.collider != null) && direction < 0))  //this is ugly code; better way?
         {
             direction = 0;
         }
@@ -113,6 +139,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyMovement()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && jumpCounter < maxJumps)  // why was it isonground || jC<mJ?
+        {
+            //add double jump with jumpCounter
+            jumpCounter++;
+            body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            isOnGround = false;
+        }
+
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
     }
 
@@ -133,6 +168,10 @@ public class PlayerMovement : MonoBehaviour
             collectibleCount++;
             collectibleUI.UpdateCollectible(collectibleCount);
 
+        }
+        if (other.gameObject.CompareTag(Globals.SECRET_AREA_TAG))
+        {
+            Destroy(other.gameObject);
         }
     }
 
