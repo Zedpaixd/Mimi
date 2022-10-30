@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     float direction;
     float moveSpeed = 5.5f;
     int _layerMask;
-    bool canMove = true;
+    public bool canMove = true;
 
     [Header("Jumping")]
     [SerializeField] private float maxJumpHeight = 2.5f;
@@ -54,11 +54,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #endregion
-
-    /*private void OnPreRender()
-    {
-        canMove = true;
-    }*/
 
     private void Start()
     {
@@ -138,11 +133,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallCheck()
     {
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);
-        RaycastHit2D hitRightUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);
-        RaycastHit2D hitLeftUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);
-        if (((hitRight.collider != null || hitRightUp.collider != null) && direction > 0) || ((hitLeft.collider != null || hitLeftUp.collider != null) && direction < 0))  //this is ugly code; better way?
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // this is
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);     // very ugly
+        RaycastHit2D hitRightUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask); // code. Any
+        RaycastHit2D hitLeftUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // better ideas?
+        if (((hitRight.collider != null || hitRightUp.collider != null) && direction > 0) || ((hitLeft.collider != null || hitLeftUp.collider != null) && direction < 0))
         {
             direction = 0;
         }
@@ -165,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.CompareTag(Globals.GROUND_TAG))
         {
-            jumpCounter = body.velocity.y < 0.15f ? 0 : 1;
+            jumpCounter = body.velocity.y < 0.15f ? 0 : 1;   // this is bad, any better ideas?
             isOnGround = true;
         }
     }
