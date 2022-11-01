@@ -20,11 +20,6 @@ public class AudioManager : GenericSingleton<AudioManager>
 
         source.clip = FindObjectOfType<SceneAudio>().GetBGM();
 
-        if (scene.buildIndex == 1 || scene.buildIndex == 0)
-        {
-            source.time = progress;
-        }
-
         source.Play();
 
     }

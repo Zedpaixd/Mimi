@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using MiniJSON;
+
 public class SettingController : MonoBehaviour
 {
 
@@ -11,6 +13,8 @@ public class SettingController : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
     JsonSaveDAO GameSaveInfo;
+    public GameObject musicObject;
+    private AudioSource AudioSource;
 
     // private AudioSource AudioSource;
     private float musicVolume;
@@ -51,4 +55,12 @@ public class SettingController : MonoBehaviour
         GameSaveInfo.updateMusicVolume(musicVolume);
     }
 
+    private void Start()
+        {
+            musicObject = GameObject.FindWithTag("Audio");
+            //AudioSource = musicObject.GetComponent<AudioSource>();
+            AudioSource = AudioManager.Instance.source;
+            AudioSource.volume = musicVolume;
+
+        }
 }
