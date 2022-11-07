@@ -13,15 +13,21 @@ public class SettingController : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
     JsonSaveDAO GameSaveInfo;
-    [SerializeField] AudioSource musicSource;
+    AudioSource musicSource;
     [SerializeField] List<AudioSource> sfxSounds;
 
     // private AudioSource AudioSource;
     private float musicVolume;
     private float sfxVolume;
-    private void Start()
+    private void Awake()
     {
+        GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
         musicSource = Camera.main.GetComponentInChildren<AudioSource>();
+        if (musicVolumeSlider != null)
+        {
+            musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson();
+            sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson();
+        }
 
     }
 
@@ -33,30 +39,29 @@ public class SettingController : MonoBehaviour
     //dynamic float
     public void MusicVolume(float volume)
     {
-        musicVolume = volume;
+        musicVolume = volume / 100f;
         musicSource.volume = musicVolume;
     }
     //dynamic float
     public void SfxVolume(float volume)
     {
-        sfxVolume = volume;
+        sfxVolume = volume / 100f;
         sfxSounds.ForEach(sfx => sfx.volume = volume);
     }
 
     //If setting frame is actives
-    private void OnEnable()
-    {
-        if (musicVolumeSlider != null)
-        {
-            GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
-            musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson();
-            sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson();
-        }
-    }
+    /*   private void OnEnable()
+       {
+           if (musicVolumeSlider != null)
+           {
+               GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
+               musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson();
+               sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson();
+           }
+       }*/
 
     public void SaveButton()
     {
-        Debug.Log(sfxVolume + "  " + musicVolume);
         GameSaveInfo.updateSfxVolume(sfxVolume);
         GameSaveInfo.updateMusicVolume(musicVolume);
     }

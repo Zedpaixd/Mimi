@@ -7,7 +7,7 @@ public class UpdateValueStartScene : MonoBehaviour
 {
     [SerializeField] AudioSource musicSource;
     [SerializeField] List<AudioSource> sfxSounds;
-    private void Awake()
+    private void start()
     {
         JsonSaveDAO GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
         musicSource = Camera.main.GetComponentInChildren<AudioSource>();
