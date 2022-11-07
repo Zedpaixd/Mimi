@@ -5045,7 +5045,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicVolumeSlider: {fileID: 75105359}
   sfxVolumeSlider: {fileID: 938982429}
-  musicSource: {fileID: 698711130}
   sfxSounds: []
 --- !u!1001 &348259704
 PrefabInstance:
@@ -13225,7 +13224,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1092251316c868740934c5b03c662c02, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac2fb1b0d1e1d643bc140512b4c848e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 698711130}
