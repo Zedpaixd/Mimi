@@ -14,9 +14,9 @@ public class LevelSelect : MonoBehaviour
     {
         StartCoroutine(loadLevelAsync(SceneManager.GetActiveScene().buildIndex - 1));
     }
-     public static void loadMainMenu(MonoBehaviour instance)
+    public static void loadMainMenu(MonoBehaviour instance)
     {
-       LevelSelect.StartLevel("Main Menu",instance);
+        LevelSelect.StartLevel("Main Menu", instance);
     }
     public void loadMainMenu()
     {
@@ -68,5 +68,5 @@ public class LevelSelect : MonoBehaviour
             yield return null;
         }
     }
-
 }
+

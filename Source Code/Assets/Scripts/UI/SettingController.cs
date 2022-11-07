@@ -13,28 +13,34 @@ public class SettingController : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
     JsonSaveDAO GameSaveInfo;
-    public GameObject musicObject;
-    private AudioSource AudioSource;
+    [SerializeField] AudioSource musicSource;
+    [SerializeField] List<AudioSource> sfxSounds;
 
     // private AudioSource AudioSource;
     private float musicVolume;
     private float sfxVolume;
+    private void Start()
+    {
+        musicSource = Camera.main.GetComponentInChildren<AudioSource>();
+
+    }
 
     public void isVisible(bool visible)
     {
         gameObject.SetActive(visible);
 
     }
-
     //dynamic float
     public void MusicVolume(float volume)
     {
         musicVolume = volume;
+        musicSource.volume = musicVolume;
     }
     //dynamic float
     public void SfxVolume(float volume)
     {
         sfxVolume = volume;
+        sfxSounds.ForEach(sfx => sfx.volume = volume);
     }
 
     //If setting frame is actives
@@ -55,12 +61,5 @@ public class SettingController : MonoBehaviour
         GameSaveInfo.updateMusicVolume(musicVolume);
     }
 
-    private void Start()
-        {
-            musicObject = GameObject.FindWithTag("Audio");
-            //AudioSource = musicObject.GetComponent<AudioSource>();
-            AudioSource = AudioManager.Instance.source;
-            AudioSource.volume = musicVolume;
 
-        }
 }
