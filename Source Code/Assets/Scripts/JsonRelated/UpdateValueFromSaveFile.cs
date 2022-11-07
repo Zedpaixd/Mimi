@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UpdateValueStartScene : MonoBehaviour
+public class UpdateValueFromSaveFile : MonoBehaviour
 {
     [SerializeField] AudioSource musicSource;
     [SerializeField] List<AudioSource> sfxSounds;

@@ -21,14 +21,7 @@ public class SettingController : MonoBehaviour
     private float sfxVolume;
     private void Awake()
     {
-        GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
-        musicSource = Camera.main.GetComponentInChildren<AudioSource>();
-        if (musicVolumeSlider != null)
-        {
-            musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson();
-            sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson();
-        }
-
+        musicSource = Camera.main.GetComponentInChildren<AudioSource>();      
     }
 
     public void isVisible(bool visible)
@@ -50,15 +43,15 @@ public class SettingController : MonoBehaviour
     }
 
     //If setting frame is actives
-    /*   private void OnEnable()
+       private void OnEnable()
        {
            if (musicVolumeSlider != null)
            {
                GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
-               musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson();
-               sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson();
+               musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson()*100;
+               sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson()*100;
            }
-       }*/
+       }
 
     public void SaveButton()
     {
