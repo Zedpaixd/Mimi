@@ -15,7 +15,7 @@ public static class Globals
     public static int SLOW_ON_JUMP = 3;
     public static int DELTA_SMOOTHENING = 5;
     public static float RAYCAST_CHECK_RANGE = 0.3f;
-
+    public static float WRITING_SPEED = 0.025f;
     #endregion
 
     #region layers

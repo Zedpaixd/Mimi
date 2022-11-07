@@ -15,16 +15,11 @@ public class CameraBehaviour : MonoBehaviour {
 	private void LateUpdate() {
 
 		proxyPosition = Vector3.SmoothDamp(proxyPosition, target.position, ref velocity, dampingTime);
-
-
 		transform.position = new Vector3(
-
 		Mathf.Round(proxyPosition.x * PPU)/PPU,
 		Mathf.Round(proxyPosition.y * PPU)/PPU,
 		-10f
 
 		);
 	}
-
-
 }

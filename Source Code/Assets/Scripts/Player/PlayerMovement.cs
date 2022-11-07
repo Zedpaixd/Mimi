@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     float direction;
     float moveSpeed = 5.5f;
     int _layerMask;
-    bool canMove = true;
+    public bool canMove = true;
 
     [Header("Jumping")]
     [SerializeField] private float maxJumpHeight = 2.5f;
@@ -43,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D body;
     private UnityArmatureComponent armatureComponent;
     private bool facingRight;
+    [SerializeField] PauseController Pause;
 
 
 
@@ -53,19 +55,13 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-    /*private void OnPreRender()
-    {
-        canMove = true;
-    }*/
-
     private void Start()
     {
         jumpCounter = 0;
         //        animator = GetComponent<Animator>();
         //        spriteRenderer = GetComponent<SpriteRenderer>();
         body = GetComponent<Rigidbody2D>();
-        collectibleUI = GameObject.Find("CollectibleCanvas").GetComponent<UiManager>();
-
+        collectibleUI = GameObject.Find("Canvas").GetComponent<UiManager>();
         gravity = -(2 * maxJumpHeight) / timeToJumpApex;
         jumpForce = (Mathf.Abs(gravity) * timeToJumpApex);
 
@@ -86,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
         GetInput();
-        
+
         animateCharacter();
         WallCheck();
 
@@ -95,6 +91,16 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.DrawRay(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Color.green);
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Color.green);
+        escapeSetting();
+    }
+
+    void escapeSetting()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause.isVisible(!Pause.gameObject.activeSelf);
+            Time.timeScale = Convert.ToInt16(!Pause.gameObject.activeSelf);
+        }
     }
 
     private void GetInput()
@@ -112,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
          * spriteRenderer.sprite = direction != 0 ? walkingSprite : standingSprite;
          *      spriteRenderer.flipX = direction < 0 ? true : false;
          */
-        
+
         flipPlayer(armatureComponent);
     }
 
@@ -127,11 +133,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallCheck()
     {
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);
-        RaycastHit2D hitRightUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);
-        RaycastHit2D hitLeftUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);
-        if (((hitRight.collider != null || hitRightUp.collider != null) && direction > 0) || ((hitLeft.collider != null || hitLeftUp.collider != null) && direction < 0))  //this is ugly code; better way?
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // this is
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);     // very ugly
+        RaycastHit2D hitRightUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask); // code. Any
+        RaycastHit2D hitLeftUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // better ideas?
+        if (((hitRight.collider != null || hitRightUp.collider != null) && direction > 0) || ((hitLeft.collider != null || hitLeftUp.collider != null) && direction < 0))
         {
             direction = 0;
         }
@@ -147,7 +153,6 @@ public class PlayerMovement : MonoBehaviour
             body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
         }
-
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
     }
 
@@ -155,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.CompareTag(Globals.GROUND_TAG))
         {
-            jumpCounter = body.velocity.y < 0.15f ? 0 : 1;
+            jumpCounter = body.velocity.y < 0.15f ? 0 : 1;   // this is bad, any better ideas?
             isOnGround = true;
         }
     }
