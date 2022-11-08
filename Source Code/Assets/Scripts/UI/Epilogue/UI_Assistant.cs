@@ -25,7 +25,7 @@ public class UI_Assistant : MonoBehaviour
     void Start()
     {
         player.canMove = false;
-        textWriter.writeMessage(messageText, epilogue[0], 0.05f);
+        textWriter.writeMessage(messageText, epilogue[0], Globals.WRITING_SPEED);
         epilogue.RemoveAt(0);
     }
 

@@ -81,14 +81,15 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
-        GetInput();
 
-        animateCharacter();
-        WallCheck();
 
         if (canMove)
+        {
+            GetInput();
+            animateCharacter();
+            WallCheck();
             ApplyMovement();
-
+        }
         Debug.DrawRay(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Color.green);
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Color.green);
         escapeSetting();
