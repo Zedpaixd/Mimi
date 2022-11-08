@@ -37,13 +37,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player")]
 
     public static PlayerMovement instance;
-    /*
-     * Animator animator;
-     * SpriteRenderer spriteRenderer;
-     */
+    
+    Animator animator;
+  //  SpriteRenderer spriteRenderer;
+    
     Rigidbody2D body;
-    private UnityArmatureComponent armatureComponent;
-    private bool facingRight;
+    private bool facingRight = true;
     [SerializeField] PauseController Pause;
 
 
@@ -58,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         jumpCounter = 0;
-        //        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         //        spriteRenderer = GetComponent<SpriteRenderer>();
         body = GetComponent<Rigidbody2D>();
         collectibleUI = GameObject.Find("Canvas").GetComponent<UiManager>();
@@ -66,9 +65,6 @@ public class PlayerMovement : MonoBehaviour
         jumpForce = (Mathf.Abs(gravity) * timeToJumpApex);
 
         _layerMask = LayerMask.GetMask(Globals.OBJECT_LAYER);
-
-        armatureComponent = GetComponent<UnityArmatureComponent>();
-
 
         /*                                                                              // Maybe for some
         maxJumpVelocity = (Mathf.Abs(gravity) * timeToJumpApex)/2;                     // other time :)
@@ -84,14 +80,21 @@ public class PlayerMovement : MonoBehaviour
         GetInput();
 
         animateCharacter();
-        WallCheck();
+    //    WallCheck();
 
         if (canMove)
             ApplyMovement();
 
+/*
+ *      // Previous settings
         Debug.DrawRay(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Color.green);
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Color.green);
+*/
+        Debug.DrawRay(transform.position + new Vector3(0, 0.075f, 0), Vector2.right, Color.red);
+        Debug.DrawRay(transform.position + new Vector3(0, 0.775f, 0), Vector2.right, Color.red);
+
         escapeSetting();
+
     }
 
     void escapeSetting()
@@ -119,24 +122,32 @@ public class PlayerMovement : MonoBehaviour
          *      spriteRenderer.flipX = direction < 0 ? true : false;
          */
 
-        flipPlayer(armatureComponent);
+        flipPlayer();
     }
 
-    private void flipPlayer(UnityArmatureComponent armatureComponent)
+    private void flipPlayer()
     {
-        if ((direction < 0 && !facingRight) || (direction > 0 && facingRight))
+        if ((direction < 0 && facingRight) || (direction > 0 && !facingRight))
         {
             facingRight = !facingRight;
-            armatureComponent.armature.flipX = !armatureComponent.armature.flipX;
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
         }
     }
 
+    /*
+     * it seems that I have break it (the player sprite clip half way in the walls
+    */
     private void WallCheck()
     {
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // this is
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);     // very ugly
-        RaycastHit2D hitRightUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask); // code. Any
-        RaycastHit2D hitLeftUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // better ideas?
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position + new Vector3(0, 0.075f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // this is
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position + new Vector3(0, 0.075f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);     // very ugly
+        RaycastHit2D hitRightUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.775f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask); // code. Any
+        RaycastHit2D hitLeftUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.775f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // better ideas?
+
+        Debug.Log(hitRight.collider);
+
         if (((hitRight.collider != null || hitRightUp.collider != null) && direction > 0) || ((hitLeft.collider != null || hitLeftUp.collider != null) && direction < 0))
         {
             direction = 0;
