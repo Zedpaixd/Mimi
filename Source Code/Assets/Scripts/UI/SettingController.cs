@@ -13,51 +13,54 @@ public class SettingController : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
     JsonSaveDAO GameSaveInfo;
-    AudioSource musicSource;
-    [SerializeField] List<AudioSource> sfxSounds;
+    public GameObject musicObject;
+    private AudioSource AudioSource;
 
     // private AudioSource AudioSource;
     private float musicVolume;
     private float sfxVolume;
-    private void Awake()
-    {
-        musicSource = Camera.main.GetComponentInChildren<AudioSource>();      
-    }
 
     public void isVisible(bool visible)
     {
         gameObject.SetActive(visible);
 
     }
+
     //dynamic float
     public void MusicVolume(float volume)
     {
-        musicVolume = volume / 100f;
-        musicSource.volume = musicVolume;
+        musicVolume = volume;
     }
     //dynamic float
     public void SfxVolume(float volume)
     {
-        sfxVolume = volume / 100f;
-        sfxSounds.ForEach(sfx => sfx.volume = volume);
+        sfxVolume = volume;
     }
 
     //If setting frame is actives
-       private void OnEnable()
-       {
-           if (musicVolumeSlider != null)
-           {
-               GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
-               musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson()*100;
-               sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson()*100;
-           }
-       }
+    private void OnEnable()
+    {
+        if (musicVolumeSlider != null)
+        {
+            GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
+            musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson();
+            sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson();
+        }
+    }
 
     public void SaveButton()
     {
+        Debug.Log(sfxVolume + "  " + musicVolume);
         GameSaveInfo.updateSfxVolume(sfxVolume);
         GameSaveInfo.updateMusicVolume(musicVolume);
     }
 
+    private void Start()
+        {
+            musicObject = GameObject.FindWithTag("Audio");
+            //AudioSource = musicObject.GetComponent<AudioSource>();
+            AudioSource = AudioManager.Instance.source;
+            AudioSource.volume = musicVolume;
 
+        }
 }

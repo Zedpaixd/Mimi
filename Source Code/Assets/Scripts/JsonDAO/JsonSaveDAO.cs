@@ -11,6 +11,7 @@ public class JsonSaveDAO
     public JsonSaveDAO(string path)
     {
         model = new SaveJsonModel();
+        Debug.Log(JsonUtility.ToJson(model));
         path += "/GameInfo.json";
         this.path = path;
         if (!File.Exists(path) || getModelFromJson() == null)
@@ -32,23 +33,17 @@ public class JsonSaveDAO
     {
         model.musicVolume = value;
         setModel(model);
-        Debug.Log(JsonUtility.ToJson(model));
-
     }
     public void updateSfxVolume(float value)
     {
         model.sfxVolume = value;
         setModel(model);
-        Debug.Log(JsonUtility.ToJson(model));
-
     }
 
     public void updateCurrentLevel(string value)
     {
         model.currentLevel = value;
         setModel(model);
-        Debug.Log(JsonUtility.ToJson(model));
-
     }
 
 
