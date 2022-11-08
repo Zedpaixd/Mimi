@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
+    static bool loading = false;
     public static void StartLevel(string level, MonoBehaviour instance)
     {
         instance.StartCoroutine(loadLevelAsync(level));
@@ -14,9 +15,9 @@ public class LevelSelect : MonoBehaviour
     {
         StartCoroutine(loadLevelAsync(SceneManager.GetActiveScene().buildIndex - 1));
     }
-     public static void loadMainMenu(MonoBehaviour instance)
+    public static void loadMainMenu(MonoBehaviour instance)
     {
-       LevelSelect.StartLevel("Main Menu",instance);
+        LevelSelect.StartLevel("Main Menu", instance);
     }
     public void loadMainMenu()
     {
@@ -25,6 +26,7 @@ public class LevelSelect : MonoBehaviour
 
     static IEnumerator loadLevelAsync(int index)
     {
+        loading = true;
         AsyncOperation asyncOp = SceneManager.LoadSceneAsync(index);
         //disable auto activation of new scene
         asyncOp.allowSceneActivation = false;
@@ -37,6 +39,7 @@ public class LevelSelect : MonoBehaviour
             if (asyncOp.progress >= 0.9f)
             {
                 asyncOp.allowSceneActivation = true;
+                loading=false;
                 //avoid infinite loop
                 yield return null;
             }
@@ -68,5 +71,5 @@ public class LevelSelect : MonoBehaviour
             yield return null;
         }
     }
-
 }
+
