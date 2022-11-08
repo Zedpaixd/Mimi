@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+
     private void Awake()
     {
         instance = this;
@@ -87,13 +88,14 @@ public class PlayerMovement : MonoBehaviour
         {
             GetInput();
             animateCharacter();
-            WallCheck();
             ApplyMovement();
+            WallCheck();
         }
         Debug.DrawRay(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Color.green);
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Color.green);
         escapeSetting();
     }
+
 
     void escapeSetting()
     {
