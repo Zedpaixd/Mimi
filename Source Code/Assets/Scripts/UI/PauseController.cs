@@ -16,7 +16,6 @@ public class PauseController : MonoBehaviour
     {
         JsonSaveDAO json = new JsonSaveDAO(Application.persistentDataPath);
         json.updateCurrentLevel(SceneManager.GetActiveScene().name);
-        Debug.Log(SceneManager.GetActiveScene().name);
         Time.timeScale = 1;
         LevelSelect.loadMainMenu(this);
     }
