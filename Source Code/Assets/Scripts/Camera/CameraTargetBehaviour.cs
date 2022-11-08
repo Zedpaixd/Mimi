@@ -6,7 +6,6 @@ public class CameraTargetBehaviour : MonoBehaviour
 {
 
     public float distance = 4;
-
     private PlayerMovement player;
 
     void Start()
@@ -16,11 +15,8 @@ public class CameraTargetBehaviour : MonoBehaviour
     Vector3 localPos;
     private void lateUpdate()
     {
-
-
         if (player.GetDirection() != 0)
         {
-
             transform.localPosition = localPos * distance;
         }
     }
