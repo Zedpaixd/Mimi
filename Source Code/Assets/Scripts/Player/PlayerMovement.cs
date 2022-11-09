@@ -44,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
     private bool facingRight = true;
     [SerializeField] PauseController Pause;
 
+    [Header("Action")]
+    [SerializeField] private bool isCrouching;
+
 
 
     private void Awake()
@@ -87,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
             animateCharacter();
             WallCheck();
             ApplyMovement();
+            DisableMovement();
         }
         Debug.DrawRay(transform.position + new Vector3(0, 0.05f, 0), Vector2.right, Color.green);
         Debug.DrawRay(transform.position + new Vector3(0, 0.8f, 0), Vector2.right, Color.green);
@@ -155,9 +159,24 @@ public class PlayerMovement : MonoBehaviour
             isOnGround = false;
             animator.Play("Mimi_jump");
         }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            isCrouching = true;
+            animator.SetBool("isCrouching", isCrouching);
+            animator.Play("Mimi_crouch");
+        }
         animator.SetFloat("Speed", moveSpeed);
         animator.SetFloat("Direction", Mathf.Abs(direction));
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
+    }
+
+    private void DisableMovement()
+    {
+        if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.W))
+        {
+            isCrouching = false;
+            animator.SetBool("isCrouching", isCrouching);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D col)
