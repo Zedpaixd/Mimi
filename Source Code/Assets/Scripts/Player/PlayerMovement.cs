@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
-using DragonBones;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -37,14 +36,16 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player")]
 
     public static PlayerMovement instance;
-    /*
-     * Animator animator;
-     * SpriteRenderer spriteRenderer;
-     */
+    Animator animator;
+    /* SpriteRenderer spriteRenderer;
+    *  private UnityArmatureComponent armatureComponent;
+    */
     Rigidbody2D body;
-    private UnityArmatureComponent armatureComponent;
-    private bool facingRight;
+    private bool facingRight = true;
     [SerializeField] PauseController Pause;
+
+    [Header("Action")]
+    [SerializeField] private bool isCrouching;
 
 
 
@@ -59,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         jumpCounter = 0;
-        //        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         //        spriteRenderer = GetComponent<SpriteRenderer>();
         body = GetComponent<Rigidbody2D>();
         collectibleUI = GameObject.Find("Canvas").GetComponent<UiManager>();
@@ -68,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
         _layerMask = LayerMask.GetMask(Globals.OBJECT_LAYER);
 
-        armatureComponent = GetComponent<UnityArmatureComponent>();
+     //   armatureComponent = GetComponent<UnityArmatureComponent>();
 
 
         /*                                                                              // Maybe for some
@@ -90,10 +91,10 @@ public class PlayerMovement : MonoBehaviour
             animateCharacter();
             jump();
             WallCheck();
-
+            DisableMovement();
         }
-        Debug.DrawRay(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Color.green);
-        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(0, 0.05f, 0), Vector2.right, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(0, 0.8f, 0), Vector2.right, Color.green);
         escapeSetting();
     }
     private void FixedUpdate()
@@ -130,24 +131,26 @@ public class PlayerMovement : MonoBehaviour
          *      spriteRenderer.flipX = direction < 0 ? true : false;
          */
 
-        flipPlayer(armatureComponent);
+        flipPlayer();
     }
 
-    private void flipPlayer(UnityArmatureComponent armatureComponent)
+    private void flipPlayer()
     {
-        if ((direction < 0 && !facingRight) || (direction > 0 && facingRight))
+        if ((direction < 0 && facingRight) || (direction > 0 && !facingRight))
         {
             facingRight = !facingRight;
-            armatureComponent.armature.flipX = !armatureComponent.armature.flipX;
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
         }
     }
 
     private void WallCheck()
     {
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // this is
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0, 0.2f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);     // very ugly
-        RaycastHit2D hitRightUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask); // code. Any
-        RaycastHit2D hitLeftUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // better ideas?
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position + new Vector3(0, 0.05f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // this is
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position + new Vector3(0, 0.05f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);     // very ugly
+        RaycastHit2D hitRightUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.8f, 0), Vector2.right, Globals.RAYCAST_CHECK_RANGE, _layerMask); // code. Any
+        RaycastHit2D hitLeftUp = Physics2D.Raycast(transform.position + new Vector3(0, 0.8f, 0), Vector2.left, Globals.RAYCAST_CHECK_RANGE, _layerMask);   // better ideas?
         if (((hitRight.collider != null || hitRightUp.collider != null) && direction > 0) || ((hitLeft.collider != null || hitLeftUp.collider != null) && direction < 0))
         {
             direction = 0;
@@ -168,6 +171,25 @@ public class PlayerMovement : MonoBehaviour
             jumpCounter++;
             body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
+            animator.Play("Mimi_jump");
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            isCrouching = true;
+            animator.SetBool("isCrouching", isCrouching);
+            animator.Play("Mimi_crouch");
+        }
+        animator.SetFloat("Speed", moveSpeed);
+        animator.SetFloat("Direction", Mathf.Abs(direction));
+        transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
+    }
+
+    private void DisableMovement()
+    {
+        if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.W))
+        {
+            isCrouching = false;
+            animator.SetBool("isCrouching", isCrouching);
         }
     }
 
@@ -177,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpCounter = body.velocity.y < 0.15f ? 0 : 1;   // this is bad, any better ideas?
             isOnGround = true;
+            animator.Play("Mimi_land");
         }
     }
     //trigger to not create collision bug with collectible
