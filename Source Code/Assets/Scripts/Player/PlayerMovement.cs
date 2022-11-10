@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+
     private void Awake()
     {
         instance = this;
@@ -87,13 +88,22 @@ public class PlayerMovement : MonoBehaviour
         {
             GetInput();
             animateCharacter();
+            jump();
             WallCheck();
-            ApplyMovement();
+
         }
         Debug.DrawRay(transform.position - new Vector3(0, 0.2f, 0), Vector2.right, Color.green);
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector2.right, Color.green);
         escapeSetting();
     }
+    private void FixedUpdate()
+    {
+        if (canMove)
+        {
+            ApplyMovement();
+        }
+    }
+
 
     void escapeSetting()
     {
@@ -147,6 +157,11 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyMovement()
     {
 
+        transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
+    }
+    void jump()
+    {
+
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround && jumpCounter < maxJumps)  // why was it isonground || jC<mJ?
         {
             //add double jump with jumpCounter
@@ -154,7 +169,6 @@ public class PlayerMovement : MonoBehaviour
             body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
         }
-        transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
     }
 
     void OnCollisionEnter2D(Collision2D col)
