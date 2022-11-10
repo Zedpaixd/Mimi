@@ -173,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
             isOnGround = false;
             animator.Play("Mimi_jump");
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.W))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             isCrouching = true;
             animator.SetBool("isCrouching", isCrouching);
