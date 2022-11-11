@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
         _layerMask = LayerMask.GetMask(Globals.OBJECT_LAYER);
 
-     //   armatureComponent = GetComponent<UnityArmatureComponent>();
+        //   armatureComponent = GetComponent<UnityArmatureComponent>();
 
 
         /*                                                                              // Maybe for some
@@ -126,11 +126,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void animateCharacter()
     {
-        /*
-         * spriteRenderer.sprite = direction != 0 ? walkingSprite : standingSprite;
-         *      spriteRenderer.flipX = direction < 0 ? true : false;
-         */
-
+        animator.SetFloat("Speed", moveSpeed);
+        animator.SetFloat("Direction", Mathf.Abs(direction));
         flipPlayer();
     }
 
@@ -156,7 +153,6 @@ public class PlayerMovement : MonoBehaviour
             direction = 0;
         }
     }
-
     private void ApplyMovement()
     {
 
@@ -179,9 +175,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isCrouching", isCrouching);
             animator.Play("Mimi_crouch");
         }
-        animator.SetFloat("Speed", moveSpeed);
-        animator.SetFloat("Direction", Mathf.Abs(direction));
-        transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
+
     }
 
     private void DisableMovement()
