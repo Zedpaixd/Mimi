@@ -195,6 +195,29 @@ public class PlayerMovement : MonoBehaviour
             isOnGround = true;
             animator.Play("Mimi_land");
         }
+
+        var coldirection = transform.InverseTransformPoint(col.transform.position);
+
+        if (col.collider.tag == "head")
+        {
+            //Go Forward
+            AttackJump();
+            Debug.Log("Hit the top");
+        }
+
+        if (col.collider.tag == "side")
+        {
+            if (coldirection.x > 0f)
+            {
+                //Go BackWard
+                HitJump(true);
+                Debug.Log("Hit the side");
+            }
+            else
+            {
+                HitJump(false);
+            }
+        }
     }
     //trigger to not create collision bug with collectible
     void OnTriggerEnter2D(Collider2D other)
@@ -210,6 +233,34 @@ public class PlayerMovement : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+    }
+
+    //attack and hit Movement
+    void AttackJump()
+    {
+        Vector2 forceDirection = new Vector2(0.2f, 0.2f);
+        float forceMagnitude = 15.0f;
+        Vector2 force = forceMagnitude * forceDirection;
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+        rb.AddForce(force, ForceMode2D.Impulse);
+    }
+    //hit Movement
+    void HitJump(bool JumpDirection)
+    {
+        Vector2 forceDirection;
+        if (JumpDirection == true)
+        {
+            forceDirection = new Vector2(-0.3f, 0.2f);
+        }
+        else
+        {
+            forceDirection = new Vector2(0.3f, 0.2f);
+        }
+
+        float forceMagnitude = 15.0f;
+        Vector2 force = forceMagnitude * forceDirection;
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+        rb.AddForce(force, ForceMode2D.Impulse);
     }
 
 
