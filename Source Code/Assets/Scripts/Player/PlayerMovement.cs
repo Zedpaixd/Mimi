@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
+using Cinemachine;
+using System.Diagnostics.Tracing;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -47,7 +49,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Action")]
     [SerializeField] private bool isCrouching;
 
-
+    [Header("Camera")]
+    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
 
 
     private void Awake()
@@ -84,6 +87,23 @@ public class PlayerMovement : MonoBehaviour
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
 
+        Debug.Log("x = " + transform.position.x + " / y = " + transform.position.y);
+        if (transform.position.x < -9.48)
+        {
+            cinemachineVirtualCamera.ForceCameraPosition(new Vector3((float) -9.48, transform.position.y, cinemachineVirtualCamera.transform.position.z), transform.rotation);
+        }
+        if (transform.position.y < -19)
+        {
+            cinemachineVirtualCamera.ForceCameraPosition(new Vector3(transform.position.x, -19, cinemachineVirtualCamera.transform.position.z), transform.rotation);
+        }
+        if (transform.position.x > 285)
+        {
+            cinemachineVirtualCamera.ForceCameraPosition(new Vector3(285, transform.position.y, cinemachineVirtualCamera.transform.position.z), transform.rotation);
+        }
+        if (transform.position.y >= 7.351116)
+        {
+            cinemachineVirtualCamera.ForceCameraPosition(new Vector3(transform.position.x, (float) 7.351116, cinemachineVirtualCamera.transform.position.z), transform.rotation);
+        }
 
         if (canMove)
         {

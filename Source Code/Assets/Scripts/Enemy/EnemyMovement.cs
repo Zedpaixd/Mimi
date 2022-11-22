@@ -36,7 +36,9 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
+        Vector3 tmp = gameObject.transform.position;
+        Xmax += tmp.x;
+        Xmin += tmp.x;
     }
 
     //change direction every three seconds
