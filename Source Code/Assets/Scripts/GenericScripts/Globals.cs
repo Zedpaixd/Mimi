@@ -3,7 +3,7 @@ public static class Globals
     #region tags
     public static string PLAYER_TAG = "Player";
     public static string GROUND_TAG = "Ground";
-    public static string COLLECTIBLE_TAG = "collectible";
+    public const string COLLECTIBLE_TAG = "collectible";
     public static string SECRET_AREA_TAG = "SecretArea";
     #endregion
 

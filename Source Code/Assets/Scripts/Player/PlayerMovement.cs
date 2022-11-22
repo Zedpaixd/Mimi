@@ -220,15 +220,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     //trigger to not create collision bug with collectible
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag(Globals.COLLECTIBLE_TAG))
-        {
-            Destroy(other.gameObject);
-            collectibleCount++;
-            collectibleUI.UpdateCollectible(collectibleCount);
-
-        }
         if (other.gameObject.CompareTag(Globals.SECRET_AREA_TAG))
         {
             Destroy(other.gameObject);

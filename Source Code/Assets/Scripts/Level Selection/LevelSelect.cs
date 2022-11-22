@@ -19,6 +19,10 @@ public class LevelSelect : MonoBehaviour
     {
         LevelSelect.StartLevel("Main Menu", instance);
     }
+    public static void reload(MonoBehaviour instance)
+    {
+        LevelSelect.StartLevel(SceneManager.GetActiveScene().name, instance);
+    }
     public void loadMainMenu()
     {
         StartLevel("MainMenu", this);
@@ -39,7 +43,7 @@ public class LevelSelect : MonoBehaviour
             if (asyncOp.progress >= 0.9f)
             {
                 asyncOp.allowSceneActivation = true;
-                loading=false;
+                loading = false;
                 //avoid infinite loop
                 yield return null;
             }
