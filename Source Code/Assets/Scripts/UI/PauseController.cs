@@ -9,6 +9,9 @@ public class PauseController : MonoBehaviour
     public void isVisible(bool visible)
     {
         gameObject.SetActive(visible);
+        transform.Find("MainPause").gameObject.SetActive(visible);
+        transform.Find("Settings").gameObject.SetActive(!visible);
+
 
     }
 

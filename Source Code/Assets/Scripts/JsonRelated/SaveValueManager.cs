@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UpdateValueFromSaveFile : MonoBehaviour
+public class SaveValueManager : MonoBehaviour
 {
     [SerializeField] AudioSource musicSource;
     [SerializeField] List<AudioSource> sfxSounds;
+
+    public List<AudioSource> SfxSounds { get => sfxSounds; set => sfxSounds = value; }
+    public AudioSource MusicSource { get => musicSource; set => musicSource = value; }
+
     private void Start()
     {
         JsonSaveDAO GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
