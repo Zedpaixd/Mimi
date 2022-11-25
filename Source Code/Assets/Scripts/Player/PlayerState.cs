@@ -8,10 +8,16 @@ public class PlayerState : MonoBehaviour
     private int collectibleCount;
     private int heartLeft = 3;
     private UiManager playerUi;
+    [SerializeField] AudioClip CoinSound;
+    [SerializeField] AudioClip hitSound;
+    [SerializeField] AudioClip deathSound;
+
+    AudioSource mimiSource;
 
 
     private void Start()
     {
+        mimiSource = GetComponent<AudioSource>();
         playerUi = GameObject.Find("Canvas").GetComponent<UiManager>();
     }
 
@@ -21,6 +27,7 @@ public class PlayerState : MonoBehaviour
         {
             case Globals.COLLECTIBLE_TAG:
                 playerUi.setCollectibleVisible(true);
+                mimiSource.PlayOneShot(CoinSound, 0.7f);
                 collectibleCount++;
                 playerUi.UpdateCollectibleCount(collectibleCount);
                 Destroy(other.gameObject);
@@ -34,13 +41,19 @@ public class PlayerState : MonoBehaviour
         {
             if (heartLeft > 0)
             {
+                mimiSource.PlayOneShot(hitSound);
                 heartLeft--;
-
+            }
+            if (heartLeft == 0)
+            {
+                mimiSource.PlayOneShot(deathSound);
             }
             playerUi.UpdateHeartLeft(heartLeft);
             playerUi.SetGameOverScreenVisible(heartLeft <= 0);
         }
+
     }
-
-
 }
+
+
+
