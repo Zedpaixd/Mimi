@@ -12,15 +12,17 @@ public class SettingController : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
     JsonSaveDAO GameSaveInfo;
-    AudioSource musicSource;
-    [SerializeField] List<AudioSource> sfxSounds;
+    private AudioSource musicSource;
+    private List<AudioSource> sfxSounds;
+    [SerializeField] SaveValueManager saveValueManager;
 
     // private AudioSource AudioSource;
     private float musicVolume;
     private float sfxVolume;
     private void Awake()
     {
-        musicSource = Camera.main.GetComponentInChildren<AudioSource>();      
+        sfxSounds = saveValueManager.SfxSounds;
+        musicSource = saveValueManager.MusicSource;
     }
 
     public void isVisible(bool visible)
@@ -38,19 +40,19 @@ public class SettingController : MonoBehaviour
     public void SfxVolume(float volume)
     {
         sfxVolume = volume / 100f;
-        sfxSounds.ForEach(sfx => sfx.volume = volume);
+        sfxSounds.ForEach(sfx => sfx.volume = sfxVolume);
     }
 
     //If setting frame is actives
-       private void OnEnable()
-       {
-           if (musicVolumeSlider != null)
-           {
-               GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
-               musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson()*100;
-               sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson()*100;
-           }
-       }
+    private void OnEnable()
+    {
+        if (musicVolumeSlider != null)
+        {
+            GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
+            musicVolumeSlider.value = GameSaveInfo.getMusicVolumeFromJson() * 100;
+            sfxVolumeSlider.value = GameSaveInfo.getSfxVolumeFromJson() * 100;
+        }
+    }
 
     public void SaveButton()
     {

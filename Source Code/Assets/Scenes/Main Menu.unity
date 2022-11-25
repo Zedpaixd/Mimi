@@ -1560,7 +1560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicVolumeSlider: {fileID: 1969499373}
   sfxVolumeSlider: {fileID: 2103172195}
-  sfxSounds: []
+  saveValueManager: {fileID: 640798630}
 --- !u!1 &640798627
 GameObject:
   m_ObjectHideFlags: 0
