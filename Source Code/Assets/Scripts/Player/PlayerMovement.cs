@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 using Cinemachine;
 using System.Diagnostics.Tracing;
+using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -49,8 +50,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Action")]
     [SerializeField] private bool isCrouching;
 
+    [Header("Secret Areas")]
+    private bool secretArea1 = false;
+    private bool secretArea2 = false;
+
     [Header("Camera")]
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+    public static bool gameOverFallCamera = false;
 
 
     private void Awake()
@@ -86,24 +92,35 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
+        float x = transform.position.x;
+        float y = transform.position.y;
+        if (!gameOverFallCamera)
+        {
+            Debug.Log("x = " + transform.position.x + " / y = " + transform.position.y);
+            if (transform.position.x < -9.48)
+            {
+                x = -9.48f;
+            }
+            if (transform.position.y < -19)
+            {
+                y = -19;
+            }
+            if (transform.position.x > 285)
+            {
+                x = 285;
+            }
+            if (transform.position.y >= 7.351116)
+            {
+                y = 7.351116f;
+            }
+        }
+        else
+        {
+            x = -9.48f;
+            y = -19;
+        }
 
-        Debug.Log("x = " + transform.position.x + " / y = " + transform.position.y);
-        if (transform.position.x < -9.48)
-        {
-            cinemachineVirtualCamera.ForceCameraPosition(new Vector3((float) -9.48, transform.position.y, cinemachineVirtualCamera.transform.position.z), transform.rotation);
-        }
-        if (transform.position.y < -19)
-        {
-            cinemachineVirtualCamera.ForceCameraPosition(new Vector3(transform.position.x, -19, cinemachineVirtualCamera.transform.position.z), transform.rotation);
-        }
-        if (transform.position.x > 285)
-        {
-            cinemachineVirtualCamera.ForceCameraPosition(new Vector3(285, transform.position.y, cinemachineVirtualCamera.transform.position.z), transform.rotation);
-        }
-        if (transform.position.y >= 7.351116)
-        {
-            cinemachineVirtualCamera.ForceCameraPosition(new Vector3(transform.position.x, (float) 7.351116, cinemachineVirtualCamera.transform.position.z), transform.rotation);
-        }
+        cinemachineVirtualCamera.ForceCameraPosition(new Vector3(x, y, cinemachineVirtualCamera.transform.position.z), cinemachineVirtualCamera.transform.rotation);
 
         if (canMove)
         {
@@ -125,7 +142,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     void escapeSetting()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -144,6 +160,7 @@ public class PlayerMovement : MonoBehaviour
     {
         return direction;
     }
+
     private void animateCharacter()
     {
         animator.SetFloat("Speed", moveSpeed);
@@ -175,9 +192,9 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ApplyMovement()
     {
-
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
     }
+
     void jump()
     {
 
@@ -207,6 +224,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Trigger to not create collision bug with collectible
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag(Globals.GROUND_TAG))
@@ -239,16 +257,44 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    //trigger to not create collision bug with collectible
-    private void OnTriggerEnter(Collider other)
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag(Globals.SECRET_AREA_TAG))
+        GameObject secretArea = other.gameObject;
+        if (secretArea.CompareTag(Globals.SECRET_AREA_TAG))
         {
-            Destroy(other.gameObject);
+            if (secretArea.name == "SecretAreaWall" && !secretArea1)
+            {
+                secretArea1 = true;
+                FadeOut(secretArea);
+            }
+            else if (secretArea.name == "SecretAreaWall (1)" && !secretArea2)
+            {
+                secretArea2 = true;
+                FadeOut(secretArea);
+            }
         }
     }
 
-    //attack and hit Movement
+    IEnumerator FadeOutCoroutine(GameObject secretArea)
+    {
+        TilemapRenderer rend = secretArea.GetComponent<TilemapRenderer>();
+        for (float i = 1; i >= -0.05f; i -= 0.05f)
+        {
+            Color c = rend.material.color;
+            c.a = i;
+            rend.material.color = c;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    void FadeOut(GameObject secretArea)
+    {
+        IEnumerator coroutine = FadeOutCoroutine(secretArea);
+        StartCoroutine(coroutine);
+    }
+
+    // Attack and hit movement
     void AttackJump()
     {
         Vector2 forceDirection = new Vector2(0.2f, 0.2f);
@@ -257,7 +303,8 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         rb.AddForce(force, ForceMode2D.Impulse);
     }
-    //hit Movement
+
+    // Hit movement
     void HitJump(bool JumpDirection)
     {
         Vector2 forceDirection;
@@ -275,6 +322,4 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         rb.AddForce(force, ForceMode2D.Impulse);
     }
-
-
 }

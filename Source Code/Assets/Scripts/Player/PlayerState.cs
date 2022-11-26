@@ -21,6 +21,11 @@ public class PlayerState : MonoBehaviour
         playerUi = GameObject.Find("Canvas").GetComponent<UiManager>();
     }
 
+    private void Update()
+    {
+        LeapOfFaith();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         switch (other.gameObject.tag)
@@ -34,6 +39,7 @@ public class PlayerState : MonoBehaviour
                 break;
         }
     }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
 
@@ -44,14 +50,29 @@ public class PlayerState : MonoBehaviour
                 mimiSource.PlayOneShot(hitSound);
                 heartLeft--;
             }
+
             if (heartLeft == 0)
             {
                 mimiSource.PlayOneShot(deathSound);
             }
+
             playerUi.UpdateHeartLeft(heartLeft);
             playerUi.SetGameOverScreenVisible(heartLeft <= 0);
         }
+    }
 
+    void LeapOfFaith()
+    {
+        if (transform.position.y < -19)
+        {
+            heartLeft = 0;
+            mimiSource.PlayOneShot(deathSound);
+            playerUi.UpdateHeartLeft(heartLeft);
+            playerUi.SetGameOverScreenVisible(heartLeft <= 0);
+
+            transform.position = new Vector3(-9.48f, -3.631f, transform.position.z);
+            PlayerMovement.gameOverFallCamera = true;
+        }
     }
 }
 

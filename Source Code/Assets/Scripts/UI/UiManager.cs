@@ -40,10 +40,5 @@ public class UiManager : MonoBehaviour
     {
         Time.timeScale = a ? 0 : 1;
         gameOverScreen.SetActive(a);
-
     }
-
-
-
-
 }
