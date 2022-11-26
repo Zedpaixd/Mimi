@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c6ac87e6c2819d749aa8fbaf006397da
+guid: 9bd0a4939fa0c40499cae12f02830993
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -101,11 +101,47 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_0
+      name: PlainTileMap_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +155,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0350154239f06c479ccc8f9683bfaf4
-      internalID: -286109109
+      spriteID: eef52ba0719d1446885f314dd228dfc5
+      internalID: -1511077652
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_1
+      name: PlainTileMap_1
       rect:
         serializedVersion: 2
         x: 256
@@ -140,14 +176,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a54d42872da9354e9ebdda10d210e72
-      internalID: 1176909786
+      spriteID: 7cb02900b4fd04eba8aabc445b43eb8e
+      internalID: 1389291751
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_2
+      name: PlainTileMap_2
       rect:
         serializedVersion: 2
         x: 512
@@ -161,56 +197,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1606e8f3bb948314dad0d3a6c9385380
-      internalID: 1083706059
+      spriteID: 579c61b833b6b4be6a25dea0731989cf
+      internalID: 1597940475
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_3
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 768
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fe4442e6fd64fe44faa01cb895f769df
-      internalID: 1537621342
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TownTileSpritesheet 1_4
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 768
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ca1acecabc023f94c8d3e0a885424676
-      internalID: -1520601981
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TownTileSpritesheet 1_5
+      name: PlainTileMap_3
       rect:
         serializedVersion: 2
         x: 0
@@ -224,14 +218,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea62045efa924ff4590fbb169294a128
-      internalID: -1779756455
+      spriteID: 487c1b4b9ec15418ba23fc860ad54163
+      internalID: 1872225994
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_6
+      name: PlainTileMap_4
       rect:
         serializedVersion: 2
         x: 256
@@ -245,14 +239,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6732dc0cd0e31084fa504b0abb9160e7
-      internalID: -1780886109
+      spriteID: 84b69e23b965e423f809a9ad17125360
+      internalID: 1770866633
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_7
+      name: PlainTileMap_5
       rect:
         serializedVersion: 2
         x: 512
@@ -266,56 +260,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c30979c3708a904798cf12c72563614
-      internalID: 1032369310
+      spriteID: 528eb0eb835544513a56830edb82730d
+      internalID: -1031792429
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_8
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 512
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2d0a5b7d73976164f99a44a94884f8d4
-      internalID: 247835178
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TownTileSpritesheet 1_9
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 512
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 05ad214462a9498498f87e5e3ed3f6b4
-      internalID: -1411354456
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TownTileSpritesheet 1_10
+      name: PlainTileMap_6
       rect:
         serializedVersion: 2
         x: 0
@@ -329,14 +281,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b600f75b76381664183dd659dd266ce0
-      internalID: -1132430584
+      spriteID: df59b1f77fde54cab90c2c6233c2f4da
+      internalID: -349743014
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_11
+      name: PlainTileMap_7
       rect:
         serializedVersion: 2
         x: 256
@@ -350,14 +302,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d798dacafc39a4499c8d045c71faaf6
-      internalID: -338259960
+      spriteID: 6feb7d49a96e04b5f99974269dd23e88
+      internalID: -1812464170
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_12
+      name: PlainTileMap_8
       rect:
         serializedVersion: 2
         x: 512
@@ -371,14 +323,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e81213c0fbcb0594194b2ed481bd71df
-      internalID: 1836483980
+      spriteID: 8b238839ceaee4cec9d6b3229bff28b0
+      internalID: 119364065
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_13
+      name: PlainTileMap_9
       rect:
         serializedVersion: 2
         x: 768
@@ -392,18 +344,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15863de2d96d5164c99ac70c3814d901
-      internalID: -1491700113
+      spriteID: 85bc6a3c92d2d41f188493203bd9f8e5
+      internalID: -2078147617
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TownTileSpritesheet 1_14
+      name: PlainTileMap_10
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 256
+        x: 0
+        y: 0
         width: 256
         height: 256
       alignment: 0
@@ -413,8 +365,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f8d2c56b25a927944bfbf9463585b364
-      internalID: -1411382906
+      spriteID: da47781264fa642e7bf310e3fadac543
+      internalID: 1214703307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlainTileMap_11
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a17bea76689014b719c013f187e9a47d
+      internalID: -1003118679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlainTileMap_12
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0ec677d29df8480381406f44f13eb3d
+      internalID: 1161858115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlainTileMap_13
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4ded213497614b26b3743a20c235e2a
+      internalID: 2001830172
       vertices: []
       indices: 
       edges: []
@@ -430,21 +445,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TownTileSpritesheet 1_14: -1411382906
-      TownTileSpritesheet 1_0: -286109109
-      TownTileSpritesheet 1_7: 1032369310
-      TownTileSpritesheet 1_13: -1491700113
-      TownTileSpritesheet 1_11: -338259960
-      TownTileSpritesheet 1_3: 1537621342
-      TownTileSpritesheet 1_9: -1411354456
-      TownTileSpritesheet 1_10: -1132430584
-      TownTileSpritesheet 1_4: -1520601981
-      TownTileSpritesheet 1_12: 1836483980
-      TownTileSpritesheet 1_6: -1780886109
-      TownTileSpritesheet 1_1: 1176909786
-      TownTileSpritesheet 1_2: 1083706059
-      TownTileSpritesheet 1_8: 247835178
-      TownTileSpritesheet 1_5: -1779756455
+      PlainTileMap_0: -1511077652
+      PlainTileMap_13: 2001830172
+      PlainTileMap_4: 1770866633
+      PlainTileMap_2: 1597940475
+      PlainTileMap_7: -1812464170
+      PlainTileMap_8: 119364065
+      PlainTileMap_10: 1214703307
+      PlainTileMap_1: 1389291751
+      PlainTileMap_9: -2078147617
+      PlainTileMap_11: -1003118679
+      PlainTileMap_5: -1031792429
+      PlainTileMap_6: -349743014
+      PlainTileMap_3: 1872225994
+      PlainTileMap_12: 1161858115
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
