@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         float y = transform.position.y;
         if (!gameOverFallCamera)
         {
-            Debug.Log("x = " + transform.position.x + " / y = " + transform.position.y);
+            //Debug.Log("x = " + transform.position.x + " / y = " + transform.position.y);
             if (transform.position.x < -9.48)
             {
                 x = -9.48f;
@@ -238,14 +238,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (col.collider.tag == "head")
         {
-            //Go Forward
-            AttackJump();
-            Debug.Log("Hit the top");
+                AttackJump();
+                Debug.Log("Hit the top");
         }
 
         if (col.collider.tag == "side")
         {
-            if (coldirection.x > 0f)
+         if (coldirection.x > 0f)
             {
                 //Go BackWard
                 HitJump(true);
@@ -297,7 +296,17 @@ public class PlayerMovement : MonoBehaviour
     // Attack and hit movement
     void AttackJump()
     {
-        Vector2 forceDirection = new Vector2(0.2f, 0.2f);
+        Vector2 forceDirection;
+        if (direction > 0)
+        {
+            forceDirection = new Vector2(0.2f, 0.2f);
+        }
+        else
+        {
+            forceDirection = new Vector2(-0.2f, 0.2f);
+        }
+
+        //Vector2 forceDirection = new Vector2(0.2f, 0.2f);
         float forceMagnitude = 15.0f;
         Vector2 force = forceMagnitude * forceDirection;
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
@@ -305,16 +314,29 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Hit movement
-    void HitJump(bool JumpDirection)
+    void HitJump(bool hitDirect)
     {
         Vector2 forceDirection;
-        if (JumpDirection == true)
+        if (direction > 0)
         {
             forceDirection = new Vector2(-0.3f, 0.2f);
+            //Debug.Log(direction);
+        }
+        else if (direction < 0) 
+        {
+            forceDirection = new Vector2(0.3f, 0.2f);
+            //Debug.Log(direction);
         }
         else
         {
-            forceDirection = new Vector2(0.3f, 0.2f);
+            if(hitDirect)
+            {
+                forceDirection = new Vector2(-0.3f, 0.2f);
+            }
+            else
+            {
+                forceDirection = new Vector2(0.3f, 0.2f);
+            }
         }
 
         float forceMagnitude = 15.0f;
