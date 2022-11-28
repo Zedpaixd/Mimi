@@ -6,6 +6,7 @@ public class AttackCollision : MonoBehaviour
 {
 
     public GameObject Enemy;
+    public GameObject side;
     
     //[Header("SoundEffect")]
     //public AudioSource[] Sound;
@@ -22,7 +23,7 @@ public class AttackCollision : MonoBehaviour
                 //sound effect
                 //num = Random.Range (0,4);
                 //Sound[num].Play();
-
+                side.SetActive(false);
                 Destroy(Enemy, 0.05f);
             }       
         }

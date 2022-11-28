@@ -28,10 +28,6 @@ public class EnemyMovement : MonoBehaviour
     [Header("Movefield")]
     public float Xmax;
     public float Xmin;
-    
-    [Header("Tags")]
-    private string PLAYER_TAG = "Player";
-    private string GROUND_TAG = "Ground";
 
     void Start()
     {
@@ -67,13 +63,14 @@ public class EnemyMovement : MonoBehaviour
         
             if(dropDetect == true)
             {
-                Debug.Log("DropDetection");
+                //Debug.Log("DropDetection");
                 _velocity.y += -Rgravity * Time.fixedDeltaTime;
 
                 var p = transform.position;
 
                 p += _velocity * Time.fixedDeltaTime;
                 transform.position = p;
+
             }
 
             rb.velocity = new Vector2(XSpeed,-gravity);
@@ -103,17 +100,17 @@ public class EnemyMovement : MonoBehaviour
         //Debug.Log("OnGround!");
 
         var coldirection = transform.InverseTransformPoint (col.transform.position);
-        if (col.collider.tag == PLAYER_TAG || col.collider.tag == GROUND_TAG)
+        if (col.collider.tag == "Player" && col.collider.tag == "Ground")
         {
             if(coldirection.x > 0f){
-                MoveTimer += 1.0f;
+                MoveTimer -= 1.0f;
                 direction = false;
-                Debug.Log("Hitted right side");
+                //Debug.Log("Hitted right side");
             }
             else{
-                MoveTimer += 1.0f;
+                MoveTimer -= 1.0f;
                 direction = true;
-                Debug.Log("Hitted left side");
+                //Debug.Log("Hitted left side");
             }
         }
     }
@@ -126,9 +123,9 @@ public class EnemyMovement : MonoBehaviour
 
     void OnCollisionExit2D (Collision2D col)
     {
-        MoveTimer += 1.0f;
+        //MoveTimer -= 1.0f;
         dropDetect = true;
-        Debug.Log("Droping!");
+        //Debug.Log("Droping!");
     }
 
 }

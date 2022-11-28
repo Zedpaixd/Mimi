@@ -9,7 +9,7 @@ public class GameOverController : MonoBehaviour
     {
         Time.timeScale = 1;
         LevelSelect.reload(this);
-        PlayerMovement.gameOverFallCamera = false;
+        CameraLimits.gameOverFallCamera = false;
     }
 
     public void MainMenu()
