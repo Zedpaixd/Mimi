@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -75369,6 +75369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2090133637}
   - component: {fileID: 2090133636}
+  - component: {fileID: 2090133638}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -75430,6 +75431,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2090133638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090133635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49cef85da110b4b0a941414c2fcecc68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minXLimit: -9.48
+  maxXLimit: 285
+  minYLimit: -19
+  maxYLimit: 7.35116
 --- !u!1001 &2093366971
 PrefabInstance:
   m_ObjectHideFlags: 0

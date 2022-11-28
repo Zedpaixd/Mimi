@@ -56,8 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Camera")]
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
-    public static bool gameOverFallCamera = false;
-
+    private CameraLimits cameraLimits;
 
     private void Awake()
     {
@@ -86,41 +85,15 @@ public class PlayerMovement : MonoBehaviour
         minJumpVelocity = (Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight))/2;
         */
 
+        cameraLimits = cinemachineVirtualCamera.GetComponent<CameraLimits>();
     }
 
 
     void Update()
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
-        float x = transform.position.x;
-        float y = transform.position.y;
-        if (!gameOverFallCamera)
-        {
-            //Debug.Log("x = " + transform.position.x + " / y = " + transform.position.y);
-            if (transform.position.x < -9.48)
-            {
-                x = -9.48f;
-            }
-            if (transform.position.y < -19)
-            {
-                y = -19;
-            }
-            if (transform.position.x > 285)
-            {
-                x = 285;
-            }
-            if (transform.position.y >= 7.351116)
-            {
-                y = 7.351116f;
-            }
-        }
-        else
-        {
-            x = -9.48f;
-            y = -19;
-        }
 
-        cinemachineVirtualCamera.ForceCameraPosition(new Vector3(x, y, cinemachineVirtualCamera.transform.position.z), cinemachineVirtualCamera.transform.rotation);
+        cameraLimits.SmartCameraFollowingThePlayer(transform.position.x, transform.position.y);
 
         if (canMove)
         {
