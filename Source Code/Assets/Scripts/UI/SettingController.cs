@@ -12,8 +12,8 @@ public class SettingController : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
     JsonSaveDAO GameSaveInfo;
-    AudioSource musicSource;
-    [SerializeField] List<AudioSource> sfxSounds;
+    private AudioSource musicSource;
+    private List<AudioSource> sfxSounds;
     [SerializeField] SaveValueManager saveValueManager;
 
     // private AudioSource AudioSource;

@@ -9,7 +9,9 @@ public class GameOverController : MonoBehaviour
     {
         Time.timeScale = 1;
         LevelSelect.reload(this);
+        CameraLimits.gameOverFallCamera = false;
     }
+
     public void MainMenu()
     {
         JsonSaveDAO json = new JsonSaveDAO(Application.persistentDataPath);

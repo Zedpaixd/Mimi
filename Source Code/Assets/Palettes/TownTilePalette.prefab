@@ -131,7 +131,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 6
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -262,12 +262,12 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 6c443fa3bc3ddb94fb6e23cce483523d, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: 21300000, guid: 0ba435c5f5fcef74593e2e4c4bf1e4fe, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 2
-    m_Data: {fileID: 21300000, guid: 0a4f0853d99ec4f4780c5233360ce61a, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 547d5af1e510b254c9f341659de5ee59, type: 3}
+  - m_RefCount: 2
+    m_Data: {fileID: 21300000, guid: 0a4f0853d99ec4f4780c5233360ce61a, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 6
     m_Data:
@@ -388,7 +388,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

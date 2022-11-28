@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
+using Cinemachine;
+using System.Diagnostics.Tracing;
+using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -47,8 +50,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Action")]
     [SerializeField] private bool isCrouching;
 
+    [Header("Secret Areas")]
+    private bool secretArea1 = false;
+    private bool secretArea2 = false;
 
-
+    [Header("Camera")]
+    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+    private CameraLimits cameraLimits;
 
     private void Awake()
     {
@@ -77,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
         minJumpVelocity = (Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight))/2;
         */
 
+        cameraLimits = cinemachineVirtualCamera.GetComponent<CameraLimits>();
     }
 
 
@@ -84,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
 
+        cameraLimits.SmartCameraFollowingThePlayer(transform.position.x, transform.position.y);
 
         if (canMove)
         {
@@ -105,7 +115,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     void escapeSetting()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -124,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
     {
         return direction;
     }
+
     private void animateCharacter()
     {
         animator.SetFloat("Speed", moveSpeed);
@@ -155,9 +165,9 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ApplyMovement()
     {
-
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
     }
+
     void jump()
     {
 
@@ -187,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Trigger to not create collision bug with collectible
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag(Globals.GROUND_TAG))
@@ -200,14 +211,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (col.collider.tag == "head")
         {
-            //Go Forward
-            AttackJump();
-            Debug.Log("Hit the top");
+                AttackJump();
+                Debug.Log("Hit the top");
         }
 
         if (col.collider.tag == "side")
         {
-            if (coldirection.x > 0f)
+         if (coldirection.x > 0f)
             {
                 //Go BackWard
                 HitJump(true);
@@ -219,35 +229,87 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    //trigger to not create collision bug with collectible
-    private void OnTriggerEnter(Collider other)
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag(Globals.SECRET_AREA_TAG))
+        GameObject secretArea = other.gameObject;
+        if (secretArea.CompareTag(Globals.SECRET_AREA_TAG))
         {
-            Destroy(other.gameObject);
+            if (secretArea.name == "SecretAreaWall" && !secretArea1)
+            {
+                secretArea1 = true;
+                FadeOut(secretArea);
+            }
+            else if (secretArea.name == "SecretAreaWall (1)" && !secretArea2)
+            {
+                secretArea2 = true;
+                FadeOut(secretArea);
+            }
         }
     }
 
-    //attack and hit Movement
+    IEnumerator FadeOutCoroutine(GameObject secretArea)
+    {
+        TilemapRenderer rend = secretArea.GetComponent<TilemapRenderer>();
+        for (float i = 1; i >= -0.05f; i -= 0.05f)
+        {
+            Color c = rend.material.color;
+            c.a = i;
+            rend.material.color = c;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    void FadeOut(GameObject secretArea)
+    {
+        IEnumerator coroutine = FadeOutCoroutine(secretArea);
+        StartCoroutine(coroutine);
+    }
+
+    // Attack and hit movement
     void AttackJump()
     {
-        Vector2 forceDirection = new Vector2(0.2f, 0.2f);
-        float forceMagnitude = 15.0f;
-        Vector2 force = forceMagnitude * forceDirection;
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        rb.AddForce(force, ForceMode2D.Impulse);
-    }
-    //hit Movement
-    void HitJump(bool JumpDirection)
-    {
         Vector2 forceDirection;
-        if (JumpDirection == true)
+        if (direction > 0)
         {
-            forceDirection = new Vector2(-0.3f, 0.2f);
+            forceDirection = new Vector2(0.2f, 0.2f);
         }
         else
         {
+            forceDirection = new Vector2(-0.2f, 0.2f);
+        }
+
+        //Vector2 forceDirection = new Vector2(0.2f, 0.2f);
+        float forceMagnitude = 15.0f;
+        Vector2 force = forceMagnitude * forceDirection;
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+        rb.AddForce(force, ForceMode2D.Impulse);
+    }
+
+    // Hit movement
+    void HitJump(bool hitDirect)
+    {
+        Vector2 forceDirection;
+        if (direction > 0)
+        {
+            forceDirection = new Vector2(-0.3f, 0.2f);
+            //Debug.Log(direction);
+        }
+        else if (direction < 0) 
+        {
             forceDirection = new Vector2(0.3f, 0.2f);
+            //Debug.Log(direction);
+        }
+        else
+        {
+            if(hitDirect)
+            {
+                forceDirection = new Vector2(-0.3f, 0.2f);
+            }
+            else
+            {
+                forceDirection = new Vector2(0.3f, 0.2f);
+            }
         }
 
         float forceMagnitude = 15.0f;
@@ -255,6 +317,4 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         rb.AddForce(force, ForceMode2D.Impulse);
     }
-
-
 }
