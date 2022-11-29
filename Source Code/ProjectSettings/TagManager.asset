@@ -7,6 +7,10 @@ TagManager:
   - Ground
   - collectible
   - SecretArea
+  - head
+  - side
+  - enemy
+  - End
   layers:
   - Default
   - TransparentFX
