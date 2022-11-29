@@ -29,6 +29,8 @@ public class EnemyMovement : MonoBehaviour
     public float Xmax;
     public float Xmin;
 
+    //public bool HitDirect = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -43,7 +45,7 @@ public class EnemyMovement : MonoBehaviour
         //XSpeed = GetXSpeed();
         if(Epilogue.activeSelf == false)
         {
-            if(MoveTimer < 0.0f || transform.position.x > Xmax || transform.position.x < Xmin){
+            if(MoveTimer < 0.0f){
                 if(direction){
                     direction = false;
                 }
@@ -54,6 +56,18 @@ public class EnemyMovement : MonoBehaviour
                 XSpeed = GetXSpeed();
                 MoveTimer = timer;
                 //Debug.Log(MoveTimer);
+            }
+            else if(transform.position.x >= Xmax || transform.position.x <= Xmin) 
+            {
+                if(direction){
+                    direction = false;
+                }
+                else
+                {
+                    direction = true;
+                }
+                XSpeed = GetXSpeed();
+                MoveTimer += 1.0f;
             }
             else{
                 MoveTimer -= Time.deltaTime;
@@ -103,13 +117,16 @@ public class EnemyMovement : MonoBehaviour
         if (col.collider.tag == "Player" && col.collider.tag == "Ground")
         {
             if(coldirection.x > 0f){
+                //HitDirect = true;
                 MoveTimer -= 1.0f;
                 direction = false;
                 //Debug.Log("Hitted right side");
             }
             else{
+                //HitDirect = false;
                 MoveTimer -= 1.0f;
                 direction = true;
+
                 //Debug.Log("Hitted left side");
             }
         }
