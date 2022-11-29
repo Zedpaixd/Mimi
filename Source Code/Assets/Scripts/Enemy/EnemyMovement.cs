@@ -8,22 +8,23 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("StartingInfo")]
     public GameObject Epilogue;
-    public float downSpeed = 1.0f; 
+    public float downSpeed = Globals.ENEMY_DOWN_SPEED; 
     public bool dropDetect = false;
 
-    [SerializeField] private float Rgravity = 9.80665f;
+    [SerializeField] private float Rgravity = Globals.ENEMY_RGRAVITY;
     private Vector3 _velocity;
 
     [Header("MovingInfo")]
-    public float speed = 1.5f;
-    public float gravity = 1.0f;
+    public float speed = Globals.ENEMY_SPEED;
+    public float gravity = Globals.ENEMY_GRAVITY;   // why define double gravity?
     public float XSpeed;
 
-    public float timer = 4.0f;
-    public float MoveTimer = 0.0f;
+    public float timer = Globals.ENEMY_TIMER;
+    public float MoveTimer = Globals.ENEMY_MOVE_TIMER;
 
     private Rigidbody2D rb = null;
     private bool direction = false; //false:left, true:right
+    // ^ can just use an int that is either -1 or 1 then say speed = speed * direction; no need for ifs.
 
     [Header("Movefield")]
     public float Xmax;
@@ -94,15 +95,7 @@ public class EnemyMovement : MonoBehaviour
     //setting the direction for the enemy movement
     private float GetXSpeed()
     {
-        if (!direction) //left
-        {
-            XSpeed = -speed;
-        }
-        else //right
-        {
-            XSpeed = speed;
-        }
-        return XSpeed;
+        return direction ? speed : -speed;
     }
 
     //enemy's direction will change to another way if enemy hit the player

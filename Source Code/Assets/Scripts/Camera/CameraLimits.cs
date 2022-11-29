@@ -24,23 +24,10 @@ public class CameraLimits : MonoBehaviour
     {
         if (!gameOverFallCamera)
         {
-            //Debug.Log("x = " + x + " / y = " + y);
-            if (x < minXLimit)
-            {
-                x = minXLimit;
-            }
-            if (y < minYLimit)
-            {
-                y = minYLimit;
-            }
-            if (x > maxXLimit)
-            {
-                x = maxXLimit;
-            }
-            if (y >= maxYLimit)
-            {
-                y = maxYLimit;
-            }
+
+            x = x < minXLimit ? minXLimit : x > maxXLimit ? maxXLimit : x;
+            y = y < minYLimit ? minYLimit : y >= maxYLimit ? maxYLimit : y;
+           
         }
         else
         {
@@ -49,6 +36,7 @@ public class CameraLimits : MonoBehaviour
         }
 
         cinemachineVirtualCamera.ForceCameraPosition(new Vector3(x, y, cinemachineVirtualCamera.transform.position.z), cinemachineVirtualCamera.transform.rotation);
+        // why are we using a Vector3 for a 2D game
     }
 
     // Gives the correct y value to see Mimi fall off-screen during the leap of faith

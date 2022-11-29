@@ -12,15 +12,11 @@ public class UiManager : MonoBehaviour
 
     public void setLifeVisible(bool a)
     {
-        if (Life.activeSelf != a)
-            Life.SetActive(a);
-
+        Life.SetActive(a);
     }
     public void setCollectibleVisible(bool a)
     {
-        if (Collectible.activeSelf != a)
-            Collectible.SetActive(a);
-
+         Collectible.SetActive(a);
     }
     public void UpdateCollectibleCount(int collectibleCount)
     {
