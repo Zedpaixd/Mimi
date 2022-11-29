@@ -32,7 +32,6 @@ public class PlayerState : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case Globals.COLLECTIBLE_TAG:
-                playerUi.setCollectibleVisible(true);
                 mimiSource.PlayOneShot(CoinSound, 0.7f);
                 collectibleCount++;
                 playerUi.UpdateCollectibleCount(collectibleCount);
@@ -51,8 +50,7 @@ public class PlayerState : MonoBehaviour
                 mimiSource.PlayOneShot(hitSound);
                 heartLeft--;
             }
-
-            if (heartLeft == 0)
+            else if (heartLeft == 0)
             {
                 mimiSource.PlayOneShot(deathSound);
             }
@@ -62,7 +60,7 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    void LeapOfFaith()
+    void LeapOfFaith()   // ??? use descriptive function names or add comments to explain the code   -Armand.
     {
         if (transform.position.y < cameraLimits.LeapOfFaithValue())
         {

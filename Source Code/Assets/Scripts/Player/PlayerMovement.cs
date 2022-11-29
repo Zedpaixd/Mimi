@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     float moveSpeed = 5.5f;
     int _layerMask;
     public bool canMove = true;
+    private Vector2 forceDirection;
 
     [Header("Jumping")]
     [SerializeField] private float maxJumpHeight = 2.5f;
@@ -74,16 +75,8 @@ public class PlayerMovement : MonoBehaviour
         collectibleUI = GameObject.Find("Canvas").GetComponent<UiManager>();
         gravity = -(2 * maxJumpHeight) / timeToJumpApex;
         jumpForce = (Mathf.Abs(gravity) * timeToJumpApex);
-
         _layerMask = LayerMask.GetMask(Globals.OBJECT_LAYER);
-
         //   armatureComponent = GetComponent<UnityArmatureComponent>();
-
-
-        /*                                                                              // Maybe for some
-        maxJumpVelocity = (Mathf.Abs(gravity) * timeToJumpApex)/2;                     // other time :)
-        minJumpVelocity = (Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight))/2;
-        */
 
         cameraLimits = cinemachineVirtualCamera.GetComponent<CameraLimits>();
     }
@@ -291,27 +284,13 @@ public class PlayerMovement : MonoBehaviour
     // Hit movement
     void HitJump(bool hitDirect)
     {
-        Vector2 forceDirection;
-        if (direction > 0)
+        if (direction != 0)
         {
-            forceDirection = new Vector2(-0.3f, 0.2f);
-            //Debug.Log(direction);
-        }
-        else if (direction < 0) 
-        {
-            forceDirection = new Vector2(0.3f, 0.2f);
-            //Debug.Log(direction);
+            forceDirection = new Vector2((float)(0.3f * -Math.Ceiling(direction)), 0.2f);
         }
         else
         {
-            if(hitDirect)
-            {
-                forceDirection = new Vector2(-0.3f, 0.2f);
-            }
-            else
-            {
-                forceDirection = new Vector2(0.3f, 0.2f);
-            }
+            forceDirection = new Vector2(0.3f * (hitDirect ? -1 : 1), 0.2f);
         }
 
         float forceMagnitude = 15.0f;

@@ -23,4 +23,13 @@ public static class Globals
     public static string OBJECT_LAYER = "Object";
 
     #endregion
+
+    #region enemy magic numbers
+    public static float ENEMY_DOWN_SPEED = 1f;
+    public static float ENEMY_SPEED = 1.5f;
+    public static float ENEMY_GRAVITY = 1f;
+    public static float ENEMY_RGRAVITY = 9.80665f;
+    public static float ENEMY_TIMER = 4f;
+    public static float ENEMY_MOVE_TIMER = 0f;
+    #endregion
 }
