@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: PlainTileMap_3
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 1872225994, guid: 9bd0a4939fa0c40499cae12f02830993, type: 3}
+  m_Sprite: {fileID: 238886278, guid: c19355483a988473a8fbc2b2479c5e6d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
