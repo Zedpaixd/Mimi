@@ -29,8 +29,6 @@ public class EnemyMovement : MonoBehaviour
     public float Xmax;
     public float Xmin;
 
-    //public bool HitDirect = false;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -117,13 +115,11 @@ public class EnemyMovement : MonoBehaviour
         if (col.collider.tag == "Player" && col.collider.tag == "Ground")
         {
             if(coldirection.x > 0f){
-                //HitDirect = true;
                 MoveTimer -= 1.0f;
                 direction = false;
                 //Debug.Log("Hitted right side");
             }
             else{
-                //HitDirect = false;
                 MoveTimer -= 1.0f;
                 direction = true;
 

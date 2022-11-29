@@ -209,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
 
         var coldirection = transform.InverseTransformPoint(col.transform.position);
 
-        if (col.collider.tag == "head")
+        if (col.collider.tag == "head" && AttackCollision.instance.Attacked)
         {
                 AttackJump();
                 Debug.Log("Hit the top");
@@ -319,6 +319,5 @@ public class PlayerMovement : MonoBehaviour
         Vector2 force = forceMagnitude * forceDirection;
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         rb.AddForce(force, ForceMode2D.Impulse);
-        Debug.Log(moveSpeed);
     }
 }
