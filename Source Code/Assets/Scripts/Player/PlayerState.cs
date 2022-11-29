@@ -38,6 +38,10 @@ public class PlayerState : MonoBehaviour
                 playerUi.UpdateCollectibleCount(collectibleCount);
                 Destroy(other.gameObject);
                 break;
+
+            case Globals.END_TAG:
+                playerUi.SetEndScreenVisible();
+                break;
         }
     }
 

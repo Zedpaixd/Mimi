@@ -9,6 +9,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private GameObject Life;
     [SerializeField] List<Image> Heart;
     [SerializeField] GameObject gameOverScreen;
+    [SerializeField] GameObject endScreen;
 
     public void setLifeVisible(bool a)
     {
@@ -40,5 +41,11 @@ public class UiManager : MonoBehaviour
     {
         Time.timeScale = a ? 0 : 1;
         gameOverScreen.SetActive(a);
+    }
+
+    public void SetEndScreenVisible()
+    {
+        Time.timeScale = 0;
+        endScreen.SetActive(true);
     }
 }
