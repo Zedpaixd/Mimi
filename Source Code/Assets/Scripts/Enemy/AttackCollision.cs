@@ -35,7 +35,7 @@ public class AttackCollision : MonoBehaviour
         {
             if(coldirection.y > 0f){
                 Attacked = true;
-                Debug.Log("Player killed the Enemy");
+                //Debug.Log("Player killed the Enemy");
                 //sound effect
                 //num = Random.Range (0,4);
                 //Sound[num].Play();
