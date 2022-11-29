@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float maxMoveSpeed = 5.5f;
-    [SerializeField] private float minMoveSpeed = 0.5f;
+    //[SerializeField] private float minMoveSpeed = 0.5f;
     [SerializeField] private float gravity;
     float direction;
     float moveSpeed = 5.5f;
@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] private float maxJumpHeight = 2.5f;
-    [SerializeField] private float minJumpHeight = 4f;
+    //[SerializeField] private float minJumpHeight = 4f;
     [SerializeField] private float timeToJumpApex = .6f;
     [SerializeField] private int maxJumps = 1;
     float jumpForce;
@@ -209,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
 
         var coldirection = transform.InverseTransformPoint(col.transform.position);
 
-        if (col.collider.tag == "head")
+        if (col.collider.tag == "head" && AttackCollision.instance.Attacked)
         {
                 AttackJump();
                 Debug.Log("Hit the top");
@@ -281,9 +281,11 @@ public class PlayerMovement : MonoBehaviour
 
         //Vector2 forceDirection = new Vector2(0.2f, 0.2f);
         float forceMagnitude = 15.0f;
+        moveSpeed = 3.0f;
         Vector2 force = forceMagnitude * forceDirection;
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         rb.AddForce(force, ForceMode2D.Impulse);
+        Debug.Log(moveSpeed);
     }
 
     // Hit movement
@@ -313,6 +315,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         float forceMagnitude = 15.0f;
+        moveSpeed = 3.0f;
         Vector2 force = forceMagnitude * forceDirection;
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         rb.AddForce(force, ForceMode2D.Impulse);

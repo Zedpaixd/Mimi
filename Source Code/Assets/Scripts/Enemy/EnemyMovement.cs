@@ -43,7 +43,7 @@ public class EnemyMovement : MonoBehaviour
         //XSpeed = GetXSpeed();
         if(Epilogue.activeSelf == false)
         {
-            if(MoveTimer < 0.0f || transform.position.x > Xmax || transform.position.x < Xmin){
+            if(MoveTimer < 0.0f){
                 if(direction){
                     direction = false;
                 }
@@ -54,6 +54,18 @@ public class EnemyMovement : MonoBehaviour
                 XSpeed = GetXSpeed();
                 MoveTimer = timer;
                 //Debug.Log(MoveTimer);
+            }
+            else if(transform.position.x >= Xmax || transform.position.x <= Xmin) 
+            {
+                if(direction){
+                    direction = false;
+                }
+                else
+                {
+                    direction = true;
+                }
+                XSpeed = GetXSpeed();
+                MoveTimer += 1.0f;
             }
             else{
                 MoveTimer -= Time.deltaTime;
@@ -110,6 +122,7 @@ public class EnemyMovement : MonoBehaviour
             else{
                 MoveTimer -= 1.0f;
                 direction = true;
+
                 //Debug.Log("Hitted left side");
             }
         }
