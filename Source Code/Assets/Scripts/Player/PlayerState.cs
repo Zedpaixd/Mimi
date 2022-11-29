@@ -12,7 +12,7 @@ public class PlayerState : MonoBehaviour
     [SerializeField] AudioClip CoinSound;
     [SerializeField] AudioClip hitSound;
     [SerializeField] AudioClip deathSound;
-
+    [SerializeField] SaturationManager saturation;
     AudioSource mimiSource;
 
     private void Start()
@@ -34,7 +34,9 @@ public class PlayerState : MonoBehaviour
             case Globals.COLLECTIBLE_TAG:
                 mimiSource.PlayOneShot(CoinSound, 0.7f);
                 collectibleCount++;
+                playerUi.setCollectibleVisible(collectibleCount > 0);
                 playerUi.UpdateCollectibleCount(collectibleCount);
+                saturation.IncreaseSaturation(1f, 0.2f);
                 Destroy(other.gameObject);
                 break;
 
@@ -58,7 +60,7 @@ public class PlayerState : MonoBehaviour
             {
                 mimiSource.PlayOneShot(deathSound);
             }
-
+            saturation.DecreaseSaturation(100f / 3f, 0.2f);
             playerUi.UpdateHeartLeft(heartLeft);
             playerUi.SetGameOverScreenVisible(heartLeft <= 0);
         }
