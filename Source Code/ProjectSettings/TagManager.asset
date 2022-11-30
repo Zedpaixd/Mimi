@@ -11,6 +11,7 @@ TagManager:
   - side
   - enemy
   - End
+  - ivy
   layers:
   - Default
   - TransparentFX
