@@ -49,7 +49,7 @@ public class PlayerState : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col)
     {
 
-        if (col.collider.CompareTag("side"))
+        if (col.collider.CompareTag("side") || col.collider.CompareTag("ivy"))
         {
             if (heartLeft > 0)
             {

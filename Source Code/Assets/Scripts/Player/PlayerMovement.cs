@@ -202,13 +202,13 @@ public class PlayerMovement : MonoBehaviour
 
         var coldirection = transform.InverseTransformPoint(col.transform.position);
 
-        if (col.collider.tag == "head" && AttackCollision.instance.Attacked)
+        if (col.collider.CompareTag("head") && AttackCollision.instance.Attacked)
         {
                 AttackJump();
                 Debug.Log("Hit the top");
         }
 
-        if (col.collider.tag == "side")
+        if (col.collider.CompareTag("side") || col.collider.CompareTag("ivy"))
         {
          if (coldirection.x > 0f)
             {
