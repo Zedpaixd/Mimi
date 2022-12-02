@@ -48,7 +48,6 @@ public class PlayerState : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-
         if (col.collider.CompareTag("side") || col.collider.CompareTag("ivy"))
         {
             if (heartLeft > 0)
@@ -66,7 +65,7 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    void LeapOfFaith()   // ??? use descriptive function names or add comments to explain the code   -Armand.
+    void LeapOfFaith() // Kills Mimi when she falls out of bounds
     {
         if (transform.position.y < cameraLimits.LeapOfFaithValue())
         {
