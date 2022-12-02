@@ -12,6 +12,7 @@ TagManager:
   - enemy
   - End
   - ivy
+  - ColorItem
   layers:
   - Default
   - TransparentFX

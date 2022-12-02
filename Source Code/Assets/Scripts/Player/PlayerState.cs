@@ -5,16 +5,24 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
+    int ColorItemTotal;
     private int collectibleCount;
-    private int heartLeft = 3;
+    private int colorItemCount;
     private UiManager playerUi;
     private CameraLimits cameraLimits;
     [SerializeField] AudioClip CoinSound;
+    [SerializeField] AudioClip ColorItemSound;
+
     [SerializeField] AudioClip hitSound;
     [SerializeField] AudioClip deathSound;
     [SerializeField] SaturationManager saturation;
     AudioSource mimiSource;
 
+    private void Awake()
+    {
+        ColorItemTotal = GameObject.Find("ColorItem").GetComponentsInChildren<Transform>().Length - 1;
+
+    }
     private void Start()
     {
         mimiSource = GetComponent<AudioSource>();
@@ -36,7 +44,13 @@ public class PlayerState : MonoBehaviour
                 collectibleCount++;
                 playerUi.setCollectibleVisible(collectibleCount > 0);
                 playerUi.UpdateCollectibleCount(collectibleCount);
-                saturation.IncreaseSaturation(1f, 0.2f);
+                Destroy(other.gameObject);
+                break;
+            case Globals.COLOR_ITEM_TAG:
+                colorItemCount++;
+                mimiSource.PlayOneShot(ColorItemSound, 0.8f);
+                playerUi.UpdateHeart((float)colorItemCount / (float)ColorItemTotal);
+                saturation.IncreaseSaturation((float)colorItemCount / (float)ColorItemTotal * 100f, 0.2f);
                 Destroy(other.gameObject);
                 break;
 
@@ -51,18 +65,18 @@ public class PlayerState : MonoBehaviour
 
         if (col.collider.CompareTag("side") || col.collider.CompareTag("ivy"))
         {
-            if (heartLeft > 0)
+            if (colorItemCount >= 0)
             {
                 mimiSource.PlayOneShot(hitSound);
-                heartLeft--;
+                colorItemCount--;
             }
-            else if (heartLeft == 0)
+            else if (colorItemCount < 0)
             {
                 mimiSource.PlayOneShot(deathSound);
             }
-            saturation.DecreaseSaturation(100f / 3f, 0.2f);
-            playerUi.UpdateHeartLeft(heartLeft);
-            playerUi.SetGameOverScreenVisible(heartLeft <= 0);
+            saturation.DecreaseSaturation((float)(ColorItemTotal - colorItemCount) / (float)ColorItemTotal * 100f, 0.2f);
+            playerUi.UpdateHeart((float)colorItemCount / (float)ColorItemTotal);
+            playerUi.SetGameOverScreenVisible(colorItemCount < 0);
         }
     }
 
@@ -70,16 +84,17 @@ public class PlayerState : MonoBehaviour
     {
         if (transform.position.y < cameraLimits.LeapOfFaithValue())
         {
-            heartLeft = 0;
+            colorItemCount = 0;
+            saturation.DecreaseSaturation((float)(ColorItemTotal - colorItemCount) / (float)ColorItemTotal * 100f, 0.2f);
             mimiSource.PlayOneShot(deathSound);
-            playerUi.UpdateHeartLeft(heartLeft);
-            playerUi.SetGameOverScreenVisible(heartLeft <= 0);
-
+            playerUi.UpdateHeart((float)colorItemCount / (float)ColorItemTotal);
+            playerUi.SetGameOverScreenVisible(colorItemCount <= 0);
             transform.position = new Vector3(-9.48f, -3.631f, transform.position.z);
             cameraLimits.freezeCamera();
             CameraLimits.gameOverFallCamera = true;
         }
     }
+
 }
 
 

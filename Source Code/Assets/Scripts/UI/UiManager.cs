@@ -6,18 +6,13 @@ public class UiManager : MonoBehaviour
 {
     [SerializeField] private Text collectibleCountText;
     [SerializeField] private GameObject Collectible;
-    [SerializeField] private GameObject Life;
-    [SerializeField] List<Image> Heart;
+    [SerializeField] private Image Life;
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject endScreen;
 
-    public void setLifeVisible(bool a)
-    {
-        Life.SetActive(a);
-    }
     public void setCollectibleVisible(bool a)
     {
-         Collectible.SetActive(a);
+        Collectible.SetActive(a);
     }
     public void UpdateCollectibleCount(int collectibleCount)
     {
@@ -25,12 +20,15 @@ public class UiManager : MonoBehaviour
             collectibleCountText.text = collectibleCount.ToString();
     }
 
-    public void UpdateHeartLeft(int heartNumber)
+    public void UpdateHeart(float fillAmount)
     {
-        foreach (Image heart in Heart)
+        if (fillAmount > Life.fillAmount)
         {
-            heart.gameObject.SetActive(heartNumber > 0);
-            heartNumber--;
+            StartCoroutine(increaseHearth(fillAmount - Life.fillAmount));
+        }
+        else
+        {
+            StartCoroutine(decreaseHearth(Life.fillAmount - fillAmount));
         }
     }
     public void SetGameOverScreenVisible(bool a)
@@ -43,5 +41,25 @@ public class UiManager : MonoBehaviour
     {
         Time.timeScale = 0;
         endScreen.SetActive(true);
+    }
+    IEnumerator increaseHearth(float fillAmount)
+    {
+        float beginFillAmount = Life.fillAmount;
+        while ( Life.fillAmount < fillAmount + beginFillAmount)
+        {
+            Life.fillAmount += fillAmount * Time.unscaledDeltaTime;
+            yield return new WaitForSecondsRealtime(fillAmount * Time.unscaledDeltaTime);
+        }
+    }
+    IEnumerator decreaseHearth(float fillAmount)
+    {
+        float beginFillAmount = Life.fillAmount;
+
+        while (Life.fillAmount >= beginFillAmount-fillAmount)
+        {
+            Life.fillAmount -= fillAmount * Time.unscaledDeltaTime;
+            yield return new WaitForSecondsRealtime(fillAmount * Time.unscaledDeltaTime);
+        }
+
     }
 }
