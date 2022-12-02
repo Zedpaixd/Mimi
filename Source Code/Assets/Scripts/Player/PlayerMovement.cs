@@ -227,7 +227,15 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    
+
+    void OnCollisionStay2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag(Globals.GROUND_TAG))
+        {
+            jumpCounter = body.velocity.y < 0.05f ? 0 : 1;   // this is bad, any better ideas?
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         GameObject secretArea = other.gameObject;
