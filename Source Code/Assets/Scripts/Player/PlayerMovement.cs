@@ -54,6 +54,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Secret Areas")]
     private bool secretArea1 = false;
     private bool secretArea2 = false;
+    public GameObject Fitting;
+    public GameObject Fitting2;
+    public GameObject Fitting3;
+    public GameObject HiddenCollectable1;
+    public GameObject HiddenCollectable2;
 
     [Header("Camera")]
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
@@ -202,13 +207,13 @@ public class PlayerMovement : MonoBehaviour
 
         var coldirection = transform.InverseTransformPoint(col.transform.position);
 
-        if (col.collider.tag == "head" && AttackCollision.instance.Attacked)
+        if (col.collider.CompareTag("head") && AttackCollision.instance.Attacked)
         {
                 AttackJump();
                 Debug.Log("Hit the top");
         }
 
-        if (col.collider.tag == "side")
+        if (col.collider.CompareTag("side") || col.collider.CompareTag("ivy"))
         {
          if (coldirection.x > 0f)
             {
@@ -232,11 +237,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 secretArea1 = true;
                 FadeOut(secretArea);
+                Fitting.SetActive(true);
+                HiddenCollectable1.SetActive(true);
+
             }
             else if (secretArea.name == "SecretAreaWall (1)" && !secretArea2)
             {
                 secretArea2 = true;
                 FadeOut(secretArea);
+                Fitting.SetActive(false);
+                Fitting2.SetActive(false);
+                Fitting3.SetActive(true);
+                HiddenCollectable2.SetActive(true);
             }
         }
     }
