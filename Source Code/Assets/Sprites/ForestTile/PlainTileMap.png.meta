@@ -153,11 +153,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -128, y: 121}
-        - {x: -128, y: -65}
-        - {x: -120, y: -128}
+      - - {x: -128, y: 128}
+        - {x: -128, y: -128}
         - {x: 128, y: -128}
-        - {x: 128, y: 120}
+        - {x: 128, y: 128}
       tessellationDetail: 0
       bones: []
       spriteID: b1db9c18081f44136b7f2aea1c307e15
@@ -178,7 +177,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -128, y: 128}
+        - {x: -128, y: -128}
+        - {x: 128, y: -128}
+        - {x: 128, y: 128}
       tessellationDetail: 0
       bones: []
       spriteID: 731cfaa6e68d14e8f88676ecb6336349
@@ -199,7 +202,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -128, y: 128}
+        - {x: -128, y: -128}
+        - {x: 128, y: -128}
+        - {x: 128, y: 128}
       tessellationDetail: 0
       bones: []
       spriteID: bf180b4a2f5d64372baf6a0a563b7955
@@ -245,7 +252,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -128, y: 128}
+        - {x: -128, y: -128}
+        - {x: 128, y: -128}
+        - {x: 128, y: 128}
       tessellationDetail: 0
       bones: []
       spriteID: beac3002f1e9b48d19d5a45abae636a0
@@ -294,9 +305,8 @@ TextureImporter:
       physicsShape:
       - - {x: -128, y: 128}
         - {x: -128, y: -128}
-        - {x: 113, y: -128}
-        - {x: 113, y: 106}
-        - {x: 112, y: 128}
+        - {x: 128, y: -128}
+        - {x: 128, y: 128}
       tessellationDetail: 0
       bones: []
       spriteID: 70e1bc9b2620d46faace4e830dd6c991
@@ -548,7 +558,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       PlainTileMap_0: 1511596000
-      PlainTileMap_12: -296814616
+      PlainTileMap_13: -260756234
       PlainTileMap_14: -461158879
       PlainTileMap_4: 238886278
       PlainTileMap_15: -498025631
@@ -562,7 +572,7 @@ TextureImporter:
       PlainTileMap_5: -2046432558
       PlainTileMap_6: 41608019
       PlainTileMap_3: 837468724
-      PlainTileMap_13: -260756234
+      PlainTileMap_12: -296814616
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
