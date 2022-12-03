@@ -172,9 +172,9 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround && jumpCounter < maxJumps)  // why was it isonground || jC<mJ?
         {
             //add double jump with jumpCounter
+            isOnGround = false;
             jumpCounter++;
             body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            isOnGround = false;
             animator.Play("Mimi_jump");
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
@@ -200,8 +200,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.CompareTag(Globals.GROUND_TAG))
         {
-            jumpCounter = body.velocity.y < 0.15f ? 0 : 1;   // this is bad, any better ideas?
-            isOnGround = true;
+            if (Math.Abs(col.contacts[0].normal[0]) < 0.72f && Math.Abs(body.velocity.y) < 0.02f ) //|| Math.Abs(body.velocity.y) < 0.15f)
+            {
+                jumpCounter = 0;
+                isOnGround = true;
+                
+            }
+            else
+            {
+                jumpCounter = 1;
+                isOnGround = false;
+
+            }
             animator.Play("Mimi_land");
         }
 
@@ -210,7 +220,7 @@ public class PlayerMovement : MonoBehaviour
         if (col.collider.CompareTag("head") && AttackCollision.instance.Attacked)
         {
                 AttackJump();
-                Debug.Log("Hit the top");
+                //Debug.Log("Hit the top");
         }
 
         if (col.collider.CompareTag("side") || col.collider.CompareTag("ivy"))
@@ -219,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Go BackWard
                 HitJump(true);
-                Debug.Log("Hit the side");
+                //Debug.Log("Hit the side");
             }
             else
             {
@@ -232,7 +242,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.CompareTag(Globals.GROUND_TAG))
         {
-            jumpCounter = body.velocity.y < 0.05f ? 0 : 1;   // this is bad, any better ideas?
+            if (Math.Abs(col.contacts[0].normal[0]) < 0.72f && body.velocity.y < 1.1f) // HORRIBLE fix but it works.
+            {
+                jumpCounter = 0;
+                isOnGround = true;
+            }
+            else 
+            {
+                jumpCounter = 1;
+                isOnGround = false;
+            }
         }
     }
 
@@ -293,7 +312,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FadeIn(GameObject secretArea)
     {
-        Debug.Log("TEST");
+        //Debug.Log("TEST");
         IEnumerator coroutine = FadeInCoroutine(secretArea);
         StartCoroutine(coroutine);
     }
@@ -317,7 +336,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 force = forceMagnitude * forceDirection;
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         rb.AddForce(force, ForceMode2D.Impulse);
-        Debug.Log(moveSpeed);
+        //Debug.Log(moveSpeed);
     }
 
     // Hit movement

@@ -14,7 +14,7 @@ public class SaveValueManager : MonoBehaviour
     private void Start()
     {
         JsonSaveDAO GameSaveInfo = new JsonSaveDAO(Application.persistentDataPath);
-        Debug.Log(SceneManager.GetSceneByName(GameSaveInfo.getCurrentLevelFromJson()).buildIndex);
+        //Debug.Log(SceneManager.GetSceneByName(GameSaveInfo.getCurrentLevelFromJson()).buildIndex);
 
         musicSource = Camera.main.GetComponentInChildren<AudioSource>();
         musicSource.volume = GameSaveInfo.getMusicVolumeFromJson();

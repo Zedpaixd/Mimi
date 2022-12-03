@@ -77,7 +77,7 @@ public class EnemyMovement : MonoBehaviour
                     transform.position = new Vector2(Xmax-0.01f, tmp.y);                
                     XSpeed = GetXSpeed();
                     MoveTimer = timer;
-                    Debug.Log("max");
+                    //Debug.Log("max");
                 }   
 
                 if(transform.position.x <= Xmin)
@@ -92,7 +92,7 @@ public class EnemyMovement : MonoBehaviour
                     transform.position = new Vector2(Xmin+0.01f, tmp.y);
                     XSpeed = GetXSpeed();
                     MoveTimer = timer;
-                    Debug.Log("min");
+                    //Debug.Log("min");
                 }               
             }
             else
@@ -154,7 +154,7 @@ public class EnemyMovement : MonoBehaviour
         {
         //MoveTimer -= 1.0f;
         dropDetect = true;
-        Debug.Log("Droping!");
+        //Debug.Log("Droping!");
         }
     }
 
