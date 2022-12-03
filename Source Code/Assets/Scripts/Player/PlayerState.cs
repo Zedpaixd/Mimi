@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
-    int ColorItemTotal;
+    [SerializeField] float HeartFillTotal = 3f;
+    [SerializeField] bool isRelateToColorItemTotal = false;
+
     private int collectibleCount;
     private int colorItemCount;
     private UiManager playerUi;
@@ -20,7 +22,18 @@ public class PlayerState : MonoBehaviour
 
     private void Awake()
     {
-        ColorItemTotal = GameObject.Find("ColorItem").GetComponentsInChildren<Transform>().Length - 1;
+        if (!isRelateToColorItemTotal)
+        {
+            return;
+        }
+        if (!GameObject.Find("ColorItem"))
+        {
+            HeartFillTotal = 1;
+            return;
+        }
+        HeartFillTotal = GameObject.Find("ColorItem").GetComponentsInChildren<CircleCollider2D>().Length;
+        //or ColorItemTotal = GameObject.FindGameObjectsWithTag("ColorItem").Length;
+
 
     }
     private void Start()
@@ -47,11 +60,14 @@ public class PlayerState : MonoBehaviour
                 Destroy(other.gameObject);
                 break;
             case Globals.COLOR_ITEM_TAG:
-                colorItemCount++;
-                mimiSource.PlayOneShot(ColorItemSound, 0.8f);
-                playerUi.UpdateHeart((float)colorItemCount / (float)ColorItemTotal);
-                saturation.IncreaseSaturation((float)colorItemCount / (float)ColorItemTotal * 100f, 0.2f);
-                Destroy(other.gameObject);
+                if (colorItemCount < HeartFillTotal)
+                {
+                    colorItemCount++;
+                    mimiSource.PlayOneShot(ColorItemSound, 0.8f);
+                    playerUi.UpdateHeart(colorItemCount / HeartFillTotal);
+                    saturation.IncreaseSaturation(100f / HeartFillTotal, 0.2f);
+                    Destroy(other.gameObject);
+                }
                 break;
 
             case Globals.END_TAG:
@@ -73,8 +89,8 @@ public class PlayerState : MonoBehaviour
             {
                 mimiSource.PlayOneShot(deathSound);
             }
-            saturation.DecreaseSaturation((float)(ColorItemTotal - colorItemCount) / (float)ColorItemTotal * 100f, 0.2f);
-            playerUi.UpdateHeart((float)colorItemCount / (float)ColorItemTotal);
+            saturation.DecreaseSaturation(100f / HeartFillTotal, 0.2f);
+            playerUi.UpdateHeart(colorItemCount / HeartFillTotal);
             playerUi.SetGameOverScreenVisible(colorItemCount < 0);
         }
     }
@@ -84,9 +100,9 @@ public class PlayerState : MonoBehaviour
         if (transform.position.y < cameraLimits.LeapOfFaithValue())
         {
             colorItemCount = 0;
-            saturation.DecreaseSaturation((float)(ColorItemTotal - colorItemCount) / (float)ColorItemTotal * 100f, 0.2f);
+            saturation.DecreaseSaturation((float)(HeartFillTotal - colorItemCount) / (float)HeartFillTotal * 100f, 0.2f);
             mimiSource.PlayOneShot(deathSound);
-            playerUi.UpdateHeart((float)colorItemCount / (float)ColorItemTotal);
+            playerUi.UpdateHeart((float)colorItemCount / (float)HeartFillTotal);
             playerUi.SetGameOverScreenVisible(colorItemCount <= 0);
             transform.position = new Vector3(-9.48f, -3.631f, transform.position.z);
             cameraLimits.freezeCamera();

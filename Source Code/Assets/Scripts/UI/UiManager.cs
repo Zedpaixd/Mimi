@@ -10,6 +10,10 @@ public class UiManager : MonoBehaviour
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject endScreen;
 
+    private void Start()
+    {
+        Life.fillAmount = 0;
+    }
     public void setCollectibleVisible(bool a)
     {
         Collectible.SetActive(a);
@@ -45,7 +49,7 @@ public class UiManager : MonoBehaviour
     IEnumerator increaseHearth(float fillAmount)
     {
         float beginFillAmount = Life.fillAmount;
-        while ( Life.fillAmount < fillAmount + beginFillAmount)
+        while (Life.fillAmount < fillAmount + beginFillAmount)
         {
             Life.fillAmount += fillAmount * Time.unscaledDeltaTime;
             yield return new WaitForSecondsRealtime(fillAmount * Time.unscaledDeltaTime);
@@ -55,7 +59,7 @@ public class UiManager : MonoBehaviour
     {
         float beginFillAmount = Life.fillAmount;
 
-        while (Life.fillAmount >= beginFillAmount-fillAmount)
+        while (Life.fillAmount >= beginFillAmount - fillAmount)
         {
             Life.fillAmount -= fillAmount * Time.unscaledDeltaTime;
             yield return new WaitForSecondsRealtime(fillAmount * Time.unscaledDeltaTime);
