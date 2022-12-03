@@ -279,6 +279,25 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(coroutine);
     }
 
+    IEnumerator FadeInCoroutine(GameObject secretArea)
+    {
+        TilemapRenderer rend = secretArea.GetComponent<TilemapRenderer>();
+        for (float i = 0; i <= 0.05f; i += 0.05f)
+        {
+            Color c = rend.material.color;
+            c.a = i;
+            rend.material.color = c;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    void FadeIn(GameObject secretArea)
+    {
+        Debug.Log("TEST");
+        IEnumerator coroutine = FadeInCoroutine(secretArea);
+        StartCoroutine(coroutine);
+    }
+
     // Attack and hit movement
     void AttackJump()
     {
