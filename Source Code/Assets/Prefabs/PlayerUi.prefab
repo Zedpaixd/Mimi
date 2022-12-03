@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 4290140977781760718}
   - component: {fileID: 5151459686507403502}
   m_Layer: 5
-  m_Name: Circle
+  m_Name: Heart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

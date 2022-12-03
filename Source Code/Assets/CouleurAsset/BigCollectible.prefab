@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5357521421521778686}
   - component: {fileID: 5573410866793094958}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WhiteBallCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: 092bf5e1668672241a4df0435eaa846d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.9019608}
   m_FlipX: 0
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5014999586869335464}
   - component: {fileID: 3186665160408929805}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Lamp Light 2D (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 2498446084887816619}
   - component: {fileID: 1409246149345671319}
   - component: {fileID: 2043973887707739413}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BigCollectible
   m_TagString: ColorItem
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9044548187459219370}
   - component: {fileID: 5882415142150665063}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WhiteBallEdge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: 092bf5e1668672241a4df0435eaa846d, type: 3}
   m_Color: {r: 0.9493596, g: 1, b: 0.56078434, a: 1}
   m_FlipX: 0
