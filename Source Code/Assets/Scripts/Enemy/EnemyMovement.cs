@@ -27,13 +27,14 @@ public class EnemyMovement : MonoBehaviour
     // ^ can just use an int that is either -1 or 1 then say speed = speed * direction; no need for ifs.
 
     [Header("Movefield")]
+    public Vector3 tmp;
     public float Xmax;
     public float Xmin;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Vector3 tmp = gameObject.transform.position;
+        tmp = gameObject.transform.position;
         Xmax += tmp.x;
         Xmin += tmp.x;
     }
@@ -44,37 +45,57 @@ public class EnemyMovement : MonoBehaviour
         //XSpeed = GetXSpeed();
         if(Epilogue.activeSelf == false)
         {
-            if(MoveTimer < 0.0f){
-                if(direction){
-                    direction = false;
-                }
-                else
-                {
-                    direction = true;
-                }
-                XSpeed = GetXSpeed();
-                MoveTimer = timer;
-                //Debug.Log(MoveTimer);
-            }
-            else if(transform.position.x >= Xmax || transform.position.x <= Xmin) 
+            if(!dropDetect)
             {
-                if(direction){
-                    direction = false;
+                if(MoveTimer < 0.0f){
+                    if(direction){
+                        direction = false;
+                    }
+                    else
+                    {
+                        direction = true;
+                    }
+                    XSpeed = GetXSpeed();
+                    MoveTimer = timer;
+                    //Debug.Log(MoveTimer);
                 }
-                else
+                else{
+                    MoveTimer -= Time.deltaTime;
+                    XSpeed = GetXSpeed();
+                    //Debug.Log(MoveTimer);
+                } 
+
+                if(transform.position.x >= Xmax)  
                 {
-                    direction = true;
-                }
-                XSpeed = GetXSpeed();
-                MoveTimer += 1.0f;
+                    if(direction){
+                        direction = false;
+                    }
+                    else
+                    {
+                        direction = true;
+                    }
+                    transform.position = new Vector2(Xmax-0.01f, tmp.y);                
+                    XSpeed = GetXSpeed();
+                    MoveTimer = timer;
+                    Debug.Log("max");
+                }   
+
+                if(transform.position.x <= Xmin)
+                {
+                    if(direction){
+                        direction = false;
+                    }
+                    else
+                    {
+                        direction = true;
+                    }
+                    transform.position = new Vector2(Xmin+0.01f, tmp.y);
+                    XSpeed = GetXSpeed();
+                    MoveTimer = timer;
+                    Debug.Log("min");
+                }               
             }
-            else{
-                MoveTimer -= Time.deltaTime;
-                XSpeed = GetXSpeed();
-                //Debug.Log(MoveTimer);
-            }    
-        
-            if(dropDetect == true)
+            else
             {
                 //Debug.Log("DropDetection");
                 _velocity.y += -Rgravity * Time.fixedDeltaTime;
@@ -129,9 +150,12 @@ public class EnemyMovement : MonoBehaviour
 
     void OnCollisionExit2D (Collision2D col)
     {
+        if (col.collider.tag == "Ground")
+        {
         //MoveTimer -= 1.0f;
         dropDetect = true;
-        //Debug.Log("Droping!");
+        Debug.Log("Droping!");
+        }
     }
 
 }
