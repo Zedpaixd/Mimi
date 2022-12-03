@@ -5,6 +5,8 @@ public static class Globals
     public static string GROUND_TAG = "Ground";
     public const string COLLECTIBLE_TAG = "collectible";
     public static string SECRET_AREA_TAG = "SecretArea";
+    public const string COLOR_ITEM_TAG = "ColorItem";
+
     public const string END_TAG = "End";
     #endregion
 
