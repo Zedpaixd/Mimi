@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     int _layerMask;
     public bool canMove = true;
     private Vector2 forceDirection;
+    private float tmpDirect;
 
     [Header("Jumping")]
     [SerializeField] private float maxJumpHeight = 2.5f;
@@ -90,7 +91,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
-
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+        Debug.Log(rb.velocity.magnitude);
         cameraLimits.SmartCameraFollowingThePlayer(transform.position.x, transform.position.y);
 
         if (canMove)
@@ -129,6 +131,10 @@ public class PlayerMovement : MonoBehaviour
 
     public float GetDirection()
     {
+        if(direction != 0)
+        {
+            tmpDirect = direction;
+        }
         return direction;
     }
 
@@ -321,27 +327,46 @@ public class PlayerMovement : MonoBehaviour
     void AttackJump()
     {
         Vector2 forceDirection;
+
+        if (direction == 0)
+        {
+            direction = tmpDirect;
+        }
+
         if (direction > 0)
         {
-            forceDirection = new Vector2(0.2f, 0.2f);
+            forceDirection = new Vector2(0.1f, 0.1f);
         }
         else
         {
-            forceDirection = new Vector2(-0.2f, 0.2f);
+            forceDirection = new Vector2(-0.1f, 0.1f);
         }
 
         //Vector2 forceDirection = new Vector2(0.2f, 0.2f);
         float forceMagnitude = 15.0f;
-        moveSpeed = 3.0f;
+        moveSpeed = 1.5f;
         Vector2 force = forceMagnitude * forceDirection;
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        rb.AddForce(force, ForceMode2D.Impulse);
-        //Debug.Log(moveSpeed);
+        if (rb.velocity.magnitude > maxMoveSpeed)
+        {
+            rb.velocity = new Vector3(rb.velocity.x / 1.1f, rb.velocity.y / 1.1f);
+        }
+        else
+        {
+            rb.AddForce(force, ForceMode2D.Impulse);
+        }
     }
 
     // Hit movement
     void HitJump(bool hitDirect)
     {
+        Vector2 forceDirection;
+
+        if (direction == 0)
+        {
+            direction = tmpDirect;
+        }
+
         if (direction != 0)
         {
             forceDirection = new Vector2((float)(0.3f * -Math.Ceiling(direction)), 0.2f);
@@ -352,9 +377,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
         float forceMagnitude = 15.0f;
-        moveSpeed = 3.0f;
+        moveSpeed = 1.5f;
         Vector2 force = forceMagnitude * forceDirection;
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        rb.AddForce(force, ForceMode2D.Impulse);
+        if (rb.velocity.magnitude >= maxMoveSpeed)
+        {
+            rb.velocity = new Vector3(rb.velocity.x / 1.1f, rb.velocity.y / 1.1f);
+        }
+        else
+        {
+            rb.AddForce(force, ForceMode2D.Impulse);
+        }
     }
 }
