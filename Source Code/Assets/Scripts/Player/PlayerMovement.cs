@@ -93,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        Debug.Log(rb.velocity.magnitude);
+        //Debug.Log(rb.velocity.magnitude);
         cameraLimits.SmartCameraFollowingThePlayer(transform.position.x, transform.position.y);
 
         if (canMove)
