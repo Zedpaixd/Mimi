@@ -10,6 +10,7 @@ public class EnemyMovement : MonoBehaviour
     public GameObject Epilogue;
     public float downSpeed = Globals.ENEMY_DOWN_SPEED; 
     public bool dropDetect = false;
+    public float DropDetectCnt=3.0f;
 
     [SerializeField] private float Rgravity = Globals.ENEMY_RGRAVITY;
     private Vector3 _velocity;
@@ -45,8 +46,9 @@ public class EnemyMovement : MonoBehaviour
         //XSpeed = GetXSpeed();
         if(Epilogue.activeSelf == false)
         {
-            if(!dropDetect)
+            if(!FootCollision.instance.dropDetect)
             {
+
                 if(MoveTimer < 0.0f){
                     if(direction){
                         direction = false;
@@ -93,7 +95,9 @@ public class EnemyMovement : MonoBehaviour
                     XSpeed = GetXSpeed();
                     MoveTimer = timer;
                     //Debug.Log("min");
-                }               
+                }        
+                
+                rb.velocity = new Vector2(XSpeed,-gravity);       
             }
             else
             {
@@ -106,8 +110,6 @@ public class EnemyMovement : MonoBehaviour
                 transform.position = p;
 
             }
-
-            rb.velocity = new Vector2(XSpeed,-gravity);
 
         }
 
@@ -122,7 +124,6 @@ public class EnemyMovement : MonoBehaviour
     //enemy's direction will change to another way if enemy hit the player
     void OnCollisionEnter2D(Collision2D col)
     {
-        dropDetect = false;
         //Debug.Log("OnGround!");
 
         var coldirection = transform.InverseTransformPoint (col.transform.position);
@@ -141,21 +142,4 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
-
-    void OnCollisionStay2D (Collision2D col)
-    {
-        dropDetect = false;
-       //Debug.Log("OnGround!");
-    }
-
-    void OnCollisionExit2D (Collision2D col)
-    {
-        if (col.collider.tag == "Ground")
-        {
-        //MoveTimer -= 1.0f;
-        dropDetect = true;
-        //Debug.Log("Droping!");
-        }
-    }
-
 }
