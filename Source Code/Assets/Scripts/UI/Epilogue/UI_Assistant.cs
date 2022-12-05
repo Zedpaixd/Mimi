@@ -8,7 +8,7 @@ public class UI_Assistant : MonoBehaviour
     [SerializeField] private Writing textWriter;
     private Text messageText;
 
-    private List<string> epilogue;
+    public List<string> epilogue;
     [SerializeField] private PlayerMovement player;
 
 
@@ -64,7 +64,15 @@ public class UI_Assistant : MonoBehaviour
             textWriter.writeMessage(messageText, epilogue[0], Globals.WRITING_SPEED);
             epilogue.RemoveAt(0);
         }
+    }
 
-        
+    public int getStoryLength()
+    {
+        return epilogue.Count;
+    }
+
+    public bool canMimiMove()
+    {
+        return player.canMove;
     }
 }

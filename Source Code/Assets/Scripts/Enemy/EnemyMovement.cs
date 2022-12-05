@@ -8,20 +8,19 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("StartingInfo")]
     public GameObject Epilogue;
-    public float downSpeed = Globals.ENEMY_DOWN_SPEED; 
+    public float downSpeed = Globals.ENEMY_DOWN_SPEED;
     public bool dropDetect = false;
-    public float DropDetectCnt=3.0f;
+    public float DropDetectCnt = 3.0f;
 
-    [SerializeField] private float Rgravity = Globals.ENEMY_RGRAVITY;
     private Vector3 _velocity;
 
     [Header("MovingInfo")]
     public float speed = Globals.ENEMY_SPEED;
-    public float gravity = Globals.ENEMY_GRAVITY;   // why define double gravity?
     public float XSpeed;
 
     public float timer = Globals.ENEMY_TIMER;
     public float MoveTimer = Globals.ENEMY_MOVE_TIMER;
+    bool raycast;
 
     private Rigidbody2D rb = null;
     private bool direction = false; //false:left, true:right
@@ -31,6 +30,8 @@ public class EnemyMovement : MonoBehaviour
     public Vector3 tmp;
     public float Xmax;
     public float Xmin;
+    [SerializeField] public Transform feet;
+    public float cliffThreshold = 0.5f;
 
     void Start()
     {
@@ -41,105 +42,33 @@ public class EnemyMovement : MonoBehaviour
     }
 
     //change direction every three seconds
-    void FixedUpdate() 
+    private void Update()
     {
-        //XSpeed = GetXSpeed();
-        if(Epilogue.activeSelf == false)
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3.right * speed).normalized*0.5f, Vector2.down);
+        Vector3 direction = Vector3.right * Time.deltaTime;
+        Debug.DrawRay(transform.position + (Vector3.right * speed).normalized, Vector2.down);
+        if (Time.frameCount % 400 == 0 || (hit.collider == null && hit.distance <= cliffThreshold))
         {
-            if(!FootCollision.instance.dropDetect)
-            {
-
-                if(MoveTimer < 0.0f){
-                    if(direction){
-                        direction = false;
-                    }
-                    else
-                    {
-                        direction = true;
-                    }
-                    XSpeed = GetXSpeed();
-                    MoveTimer = timer;
-                    //Debug.Log(MoveTimer);
-                }
-                else{
-                    MoveTimer -= Time.deltaTime;
-                    XSpeed = GetXSpeed();
-                    //Debug.Log(MoveTimer);
-                } 
-
-                if(transform.position.x >= Xmax)  
-                {
-                    if(direction){
-                        direction = false;
-                    }
-                    else
-                    {
-                        direction = true;
-                    }
-                    transform.position = new Vector2(Xmax-0.01f, tmp.y);                
-                    XSpeed = GetXSpeed();
-                    MoveTimer = timer;
-                    //Debug.Log("max");
-                }   
-
-                if(transform.position.x <= Xmin)
-                {
-                    if(direction){
-                        direction = false;
-                    }
-                    else
-                    {
-                        direction = true;
-                    }
-                    transform.position = new Vector2(Xmin+0.01f, tmp.y);
-                    XSpeed = GetXSpeed();
-                    MoveTimer = timer;
-                    //Debug.Log("min");
-                }        
-                
-                rb.velocity = new Vector2(XSpeed,-gravity);       
-            }
-            else
-            {
-                //Debug.Log("DropDetection");
-                _velocity.y += -Rgravity * Time.fixedDeltaTime;
-
-                var p = transform.position;
-
-                p += _velocity * Time.fixedDeltaTime;
-                transform.position = p;
-
-            }
-
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            speed = -speed;
         }
 
+        transform.Translate(direction * speed);
     }
+
 
     //setting the direction for the enemy movement
-    private float GetXSpeed()
-    {
-        return direction ? speed : -speed;
-    }
-
     //enemy's direction will change to another way if enemy hit the player
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        //Debug.Log("OnGround!");
+      void OnCollisionEnter2D(Collision2D col)
+      {
+          //Debug.Log("OnGround!");
+          if (col.collider.tag == "Player" || col.collider.tag == "Ground"||col.collider.tag == "Enemy")
+          {
+              speed = -speed;
+              transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+          }
 
-        var coldirection = transform.InverseTransformPoint (col.transform.position);
-        if (col.collider.tag == "Player" && col.collider.tag == "Ground")
-        {
-            if(coldirection.x > 0f){
-                MoveTimer -= 1.0f;
-                direction = false;
-                //Debug.Log("Hitted right side");
-            }
-            else{
-                MoveTimer -= 1.0f;
-                direction = true;
+      }
 
-                //Debug.Log("Hitted left side");
-            }
-        }
-    }
 }
+

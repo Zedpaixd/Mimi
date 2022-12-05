@@ -7,6 +7,10 @@ public class Storytelling : MonoBehaviour
 
     private List<string> epilogue;
     public UI_Assistant writer;
+    public UiManager uiManager;
+    public PlayerState playerState;
+    private bool endStoryStarted;
+    private bool endStoryFinished;
 
     void Start()
     {
@@ -19,6 +23,15 @@ public class Storytelling : MonoBehaviour
         writer.startWriting();
     }
 
+    private void Update()
+    {
+        if (endStoryStarted && writer.getStoryLength() == 0 && writer.canMimiMove())
+        {
+            endStoryStarted = false;
+            uiManager.SetEndScreenVisible(playerState.getcollectibleCount());
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -29,6 +42,7 @@ public class Storytelling : MonoBehaviour
             epilogue.Add("Mimi wondered for a brief second but with no avail; the only thought that overwhelmed her mind was  of the odd experience she is living, giving her energy and motivation to continue.");
             writer.addStory(epilogue);
             writer.startWriting();
+            endStoryStarted = true;
         }
     }
 }

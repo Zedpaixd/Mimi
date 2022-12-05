@@ -69,10 +69,6 @@ public class PlayerState : MonoBehaviour
                     Destroy(other.gameObject);
                 }
                 break;
-
-            case Globals.END_TAG:
-                playerUi.SetEndScreenVisible();
-                break;
         }
     }
 
@@ -110,6 +106,10 @@ public class PlayerState : MonoBehaviour
         }
     }
 
+    public int getcollectibleCount()
+    {
+        return collectibleCount;
+    }
 }
 
 

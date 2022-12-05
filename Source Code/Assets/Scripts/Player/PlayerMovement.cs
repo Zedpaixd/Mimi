@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Cinemachine;
 using System.Diagnostics.Tracing;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -92,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveSpeed = Mathf.MoveTowards(moveSpeed, maxMoveSpeed, Time.deltaTime * Globals.DELTA_SMOOTHENING);
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        Debug.Log(rb.velocity.magnitude);
+        //Debug.Log(rb.velocity.magnitude);
         cameraLimits.SmartCameraFollowingThePlayer(transform.position.x, transform.position.y);
 
         if (canMove)
@@ -286,10 +287,30 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        GameObject secretArea = other.gameObject;
+        if (secretArea.CompareTag(Globals.SECRET_AREA_TAG))
+        {
+            Debug.Log("You left the secret area.");
+            if (secretArea.name == "SecretAreaWall" && secretArea1)
+            {
+                secretArea1 = false;
+                FadeIn(secretArea);
+            }
+            else if (secretArea.name == "SecretAreaWall (1)" && secretArea2)
+            {
+                Debug.Log("You left the secret area.");
+                secretArea2 = false;
+                FadeIn(secretArea);
+            } 
+        }
+    }
+
     IEnumerator FadeOutCoroutine(GameObject secretArea)
     {
         TilemapRenderer rend = secretArea.GetComponent<TilemapRenderer>();
-        for (float i = 1; i >= -0.05f; i -= 0.05f)
+        for (float i = 1; i > 0.5f; i -= 0.05f)
         {
             Color c = rend.material.color;
             c.a = i;
@@ -307,9 +328,9 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator FadeInCoroutine(GameObject secretArea)
     {
         TilemapRenderer rend = secretArea.GetComponent<TilemapRenderer>();
-        for (float i = 0; i <= 0.05f; i += 0.05f)
+        Color c = rend.material.color;
+        for (float i = 0.5f; i < 1.05; i += 0.05f)
         {
-            Color c = rend.material.color;
             c.a = i;
             rend.material.color = c;
             yield return new WaitForSeconds(0.05f);
@@ -318,7 +339,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FadeIn(GameObject secretArea)
     {
-        //Debug.Log("TEST");
         IEnumerator coroutine = FadeInCoroutine(secretArea);
         StartCoroutine(coroutine);
     }
