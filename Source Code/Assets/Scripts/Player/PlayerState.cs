@@ -14,14 +14,14 @@ public class PlayerState : MonoBehaviour
     private CameraLimits cameraLimits;
     [SerializeField] AudioClip CoinSound;
     [SerializeField] AudioClip ColorItemSound;
-
+    [SerializeField] float hitDelay = 0.3f;
     [SerializeField] AudioClip hitSound;
     [SerializeField] AudioClip deathSound;
     [SerializeField] SaturationManager saturation;
     AudioSource mimiSource;
-
-    private float xSpawnPoint;
-    private float ySpawnPoint;
+    float xSpawnPos;
+    float ySpawnPos;
+    bool isHitable = true;
 
     private void Awake()
     {
@@ -44,8 +44,8 @@ public class PlayerState : MonoBehaviour
         mimiSource = GetComponent<AudioSource>();
         playerUi = GameObject.Find("Canvas").GetComponent<UiManager>();
         cameraLimits = GameObject.Find("Virtual Camera").GetComponent<CameraLimits>();
-        xSpawnPoint = transform.position.x;
-        ySpawnPoint = transform.position.y;
+        xSpawnPos = transform.position.x;
+        ySpawnPos = transform.position.y;
     }
 
     private void Update()
@@ -79,22 +79,39 @@ public class PlayerState : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.collider.CompareTag("side") || col.collider.CompareTag("ivy"))
+        if ((col.collider.CompareTag("enemy") || col.collider.CompareTag("ivy")) && isHitable)
         {
-            if (colorItemCount >= 0)
-            {
-                mimiSource.PlayOneShot(hitSound);
-                colorItemCount--;
-            }
-            else if (colorItemCount < 0)
-            {
-                mimiSource.PlayOneShot(deathSound);
-            }
+            StartCoroutine(hitWithDelay(hitDelay));
             saturation.DecreaseSaturation(100f / HeartFillTotal, 0.2f);
             playerUi.UpdateHeart(colorItemCount / HeartFillTotal);
             playerUi.SetGameOverScreenVisible(colorItemCount < 0);
         }
     }
+
+    IEnumerator hitWithDelay(float delay)
+    {
+        HitJump();
+        if (colorItemCount >= 0)
+        {
+            mimiSource.PlayOneShot(hitSound);
+            colorItemCount--;
+            isHitable = false;
+            yield return new WaitForSeconds(delay);
+            isHitable = true;
+        }
+        else if (colorItemCount < 0)
+        {
+            mimiSource.PlayOneShot(deathSound);
+        }
+    }
+    void HitJump()
+    {
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+        float forceMagnitude = 3.0f;
+        int faceLeftRight = transform.localScale.x > 0 ? 1 : -1;
+        rb.AddForce((-faceLeftRight * Vector2.right + Vector2.up).normalized * forceMagnitude, ForceMode2D.Impulse);
+    }
+
 
     void LeapOfFaith() // Kills Mimi when she falls out of bounds
     {
@@ -105,7 +122,7 @@ public class PlayerState : MonoBehaviour
             mimiSource.PlayOneShot(deathSound);
             playerUi.UpdateHeart((float)colorItemCount / (float)HeartFillTotal);
             playerUi.SetGameOverScreenVisible(colorItemCount <= 0);
-            transform.position = new Vector3(xSpawnPoint, ySpawnPoint, transform.position.z);
+            transform.position = new Vector3(xSpawnPos, ySpawnPos, transform.position.z);
             cameraLimits.freezeCamera();
             CameraLimits.gameOverFallCamera = true;
         }

@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float GetDirection()
     {
-        if(direction != 0)
+        if (direction != 0)
         {
             tmpDirect = direction;
         }
@@ -170,12 +170,14 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ApplyMovement()
     {
+        Debug.DrawRay(transform.position, body.velocity);
+        //    body.MovePosition(transform.position + Vector3.right * direction * Time.deltaTime * moveSpeed);
         transform.Translate(Vector3.right * direction * Time.deltaTime * moveSpeed);
+        // body.velocity = new Vector2(direction * moveSpeed, body.velocity.y);
     }
 
     void jump()
     {
-
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround && jumpCounter < maxJumps)  // why was it isonground || jC<mJ?
         {
             //add double jump with jumpCounter
@@ -207,11 +209,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.CompareTag(Globals.GROUND_TAG))
         {
-            if (Math.Abs(col.contacts[0].normal[0]) < 0.72f && Math.Abs(body.velocity.y) < 0.02f ) //|| Math.Abs(body.velocity.y) < 0.15f)
+            if (Math.Abs(col.contacts[0].normal[0]) < 0.72f && Math.Abs(body.velocity.y) < 0.02f) //|| Math.Abs(body.velocity.y) < 0.15f)
             {
                 jumpCounter = 0;
                 isOnGround = true;
-                
+
             }
             else
             {
@@ -226,22 +228,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (col.collider.CompareTag("head") && AttackCollision.instance.Attacked)
         {
-                AttackJump();
-                //Debug.Log("Hit the top");
-        }
-
-        if (col.collider.CompareTag("side") || col.collider.CompareTag("ivy"))
-        {
-         if (coldirection.x > 0f)
-            {
-                //Go BackWard
-                HitJump(true);
-                //Debug.Log("Hit the side");
-            }
-            else
-            {
-                HitJump(false);
-            }
+            AttackJump();
+            //Debug.Log("Hit the top");
         }
     }
 
@@ -254,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpCounter = 0;
                 isOnGround = true;
             }
-            else 
+            else
             {
                 jumpCounter = 1;
                 isOnGround = false;
@@ -303,7 +291,7 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("You left the secret area.");
                 secretArea2 = false;
                 FadeIn(secretArea);
-            } 
+            }
         }
     }
 
@@ -378,35 +366,5 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Hit movement
-    void HitJump(bool hitDirect)
-    {
-        Vector2 forceDirection;
-
-        if (direction == 0)
-        {
-            direction = tmpDirect;
-        }
-
-        if (direction != 0)
-        {
-            forceDirection = new Vector2((float)(0.3f * -Math.Ceiling(direction)), 0.2f);
-        }
-        else
-        {
-            forceDirection = new Vector2(0.3f * (hitDirect ? -1 : 1), 0.2f);
-        }
-
-        float forceMagnitude = 15.0f;
-        moveSpeed = 1.5f;
-        Vector2 force = forceMagnitude * forceDirection;
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        if (rb.velocity.magnitude >= maxMoveSpeed)
-        {
-            rb.velocity = new Vector3(rb.velocity.x / 1.1f, rb.velocity.y / 1.1f);
-        }
-        else
-        {
-            rb.AddForce(force, ForceMode2D.Impulse);
-        }
-    }
+   
 }
