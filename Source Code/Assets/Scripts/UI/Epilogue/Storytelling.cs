@@ -14,10 +14,9 @@ public class Storytelling : MonoBehaviour
     void Start()
     {
         epilogue = new List<string>();
-        epilogue.Add("In a long distant world, a rabbit was born.Mimi was an unlucky kind; since birth, she was unable to differentiate colours. Not thinking much of it, she thought it was a completely normal thing.");
-        epilogue.Add("Years of criticism and confusion later, the surroundings made Mimi realise her one big lack; her sight of colors. It was not an easy thing to accept; Mimi simply refused to believe that others could see a wider range of colours than her.");
-        epilogue.Add("Sorrowful months have passed by, until, one night, upon a deep look into the forest from her balcony, she saw something unseen before; it was a different, more fragrant shining shade of grey. It was almost as if... it was not grey?");
-        epilogue.Add("Without a second thought, Mimi began her chase in fulfilling her inquiries about the witnessed anomaly.");
+        epilogue.Add("After a long journey, Mimi found herself out of the {Level1 theme} that she lives in, straight into {Level2 theme}.");
+        epilogue.Add("A weird feeling was emmerging, as if she was drawn towards something.");
+        epilogue.Add("Did she get herself into something she shouldn't have? Is this whole thing a message from a more powerful being? What should Mimi do?");
         writer.addStory(epilogue);
         writer.startWriting();
     }
@@ -37,8 +36,9 @@ public class Storytelling : MonoBehaviour
         if (collision.transform.tag == Globals.PLAYER_TAG)
         {
             epilogue.Clear();
-            epilogue.Add("As Mimi kept on approaching the bizarre anomaly previously seen, she has noticed weird things that started happening to her. Was it colours that she started seeing? And why were people trying to stop her?");
-            epilogue.Add("Mimi wondered for a brief second but with no avail; the only thought that overwhelmed her mind was  of the odd experience she is living, giving her energy and motivation to continue.");
+            epilogue.Add("Through her travels, Mimi now found herself outside of the {Level2 theme} yet she was still not tired, yet thrilled to continue with her journey.");
+            epilogue.Add("Though one thing was still on her mind. Why are others trying to stop her? Is she doing something she should not? It's the only possible explanation...");
+            epilogue.Add("What should Mimi do...? Should she continue...? Should she stop and trace her way back home...?");
             writer.addStory(epilogue);
             writer.startWriting();
             endStoryStarted = true;
