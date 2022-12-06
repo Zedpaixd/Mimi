@@ -9,18 +9,27 @@ public class EnemyMovement : MonoBehaviour
     public float speed = Globals.ENEMY_SPEED;
     public float cliffThreshold = 0.5f;
     float distanceCrossed;
-    [SerializeField] float distanceToCross;
+    [SerializeField] float distanceToCross = 2f;
     //change direction every three seconds
     private void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3.right * speed).normalized * 0.5f, Vector2.down);
         Vector3 direction = Vector3.right * Time.deltaTime;
-        distanceCrossed += Time.deltaTime * speed;
-        if (distanceCrossed >= distanceToCross || (hit.collider == null && hit.distance <= cliffThreshold))
+        distanceCrossed += Time.deltaTime * Mathf.Abs(speed);
+          if (distanceCrossed >= distanceToCross)
+          {
+              changeDirection();
+          }
+        transform.Translate(direction * speed);
+    }
+
+    private void FixedUpdate()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3.right * speed).normalized * 0.5f, Vector2.down);
+        if ((hit.collider == null && hit.distance <= cliffThreshold))
         {
             changeDirection();
+
         }
-        transform.Translate(direction * speed);
     }
     void changeDirection()
     {
@@ -31,9 +40,10 @@ public class EnemyMovement : MonoBehaviour
     }
     //setting the direction for the enemy movement
     //enemy's direction will change to another way if enemy hit the player
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.collider.tag == "Player" || col.collider.tag == "Ground" || col.collider.tag == "Enemy")
+
+    private void OnTriggerEnter2D(Collider2D col) {
+
+        if (col.tag == "Player" || col.tag == "Ground" || col.tag == "enemy")
         {
             changeDirection();
         }

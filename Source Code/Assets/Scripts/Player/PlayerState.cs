@@ -20,6 +20,9 @@ public class PlayerState : MonoBehaviour
     [SerializeField] SaturationManager saturation;
     AudioSource mimiSource;
 
+    private float xSpawnPoint;
+    private float ySpawnPoint;
+
     private void Awake()
     {
         if (!isRelateToColorItemTotal)
@@ -41,6 +44,8 @@ public class PlayerState : MonoBehaviour
         mimiSource = GetComponent<AudioSource>();
         playerUi = GameObject.Find("Canvas").GetComponent<UiManager>();
         cameraLimits = GameObject.Find("Virtual Camera").GetComponent<CameraLimits>();
+        xSpawnPoint = transform.position.x;
+        ySpawnPoint = transform.position.y;
     }
 
     private void Update()
@@ -100,7 +105,7 @@ public class PlayerState : MonoBehaviour
             mimiSource.PlayOneShot(deathSound);
             playerUi.UpdateHeart((float)colorItemCount / (float)HeartFillTotal);
             playerUi.SetGameOverScreenVisible(colorItemCount <= 0);
-            transform.position = new Vector3(-9.48f, -3.631f, transform.position.z);
+            transform.position = new Vector3(xSpawnPoint, ySpawnPoint, transform.position.z);
             cameraLimits.freezeCamera();
             CameraLimits.gameOverFallCamera = true;
         }
