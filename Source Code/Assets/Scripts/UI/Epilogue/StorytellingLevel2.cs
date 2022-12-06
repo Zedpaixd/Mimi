@@ -7,6 +7,9 @@ public class StorytellingLevel2 : MonoBehaviour
 
     private List<string> epilogue;
     public UI_Assistant writer;
+    public UiManager uiManager;
+    public PlayerState playerState;
+    private bool endStoryStarted;
 
     void Start()
     {
@@ -17,7 +20,14 @@ public class StorytellingLevel2 : MonoBehaviour
         writer.addStory(epilogue);
         writer.startWriting();
     }
-
+    private void Update()
+    {
+        if (endStoryStarted && writer.getStoryLength() == 0 && writer.canMimiMove())
+        {
+            endStoryStarted = false;
+            uiManager.SetEndScreenVisible(playerState.getcollectibleCount());
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -29,6 +39,7 @@ public class StorytellingLevel2 : MonoBehaviour
             epilogue.Add("What should Mimi do...? Should she continue...? Should she stop and trace her way back home...?");
             writer.addStory(epilogue);
             writer.startWriting();
+            endStoryStarted = true;
         }
     }
 }

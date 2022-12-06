@@ -8,6 +8,7 @@ using Cinemachine;
 using System.Diagnostics.Tracing;
 using UnityEngine.Tilemaps;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -107,6 +108,9 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(transform.position + new Vector3(0, 0.05f, 0), Vector2.right, Color.green);
         Debug.DrawRay(transform.position + new Vector3(0, 0.8f, 0), Vector2.right, Color.green);
         escapeSetting();
+
+        //Debug.Log(SceneManager.GetSceneByBuildIndex(2).name);//SceneManager.GetActiveScene().buildIndex + 1);//SceneManager.GetSceneByBuildIndex(0).name);
+
     }
     private void FixedUpdate()
     {

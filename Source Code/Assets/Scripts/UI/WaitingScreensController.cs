@@ -4,6 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class WaitingScreensController : MonoBehaviour
 {
+    List<string> levels; // SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1).name returns null for some reason
+
+    public void Start()
+    {
+        levels = new List<string>();
+        levels.Add("Main Menu");
+        levels.Add("Level 1");
+        levels.Add("Level 2");
+        levels.Add("Credits");
+    }
+
     public void RestartLevel()
     {
         Time.timeScale = 1;
@@ -14,17 +25,22 @@ public class WaitingScreensController : MonoBehaviour
     public void NextLevel()
     {
         JsonSaveDAO json = new JsonSaveDAO(Application.persistentDataPath);
-        json.updateCurrentLevel("Level 2");
+
+        if (levels[SceneManager.GetActiveScene().buildIndex + 1] != "Credits")
+            json.updateCurrentLevel(levels[SceneManager.GetActiveScene().buildIndex + 1]);
+        else
+            json.updateCurrentLevel("Level 1");
+        
+        
         Time.timeScale = 1;
-        LevelSelect.StartLevel("Level 2", this);
+        LevelSelect.StartLevel(levels[SceneManager.GetActiveScene().buildIndex + 1], this);
         CameraLimits.gameOverFallCamera = false;
     }
 
     public void MainMenu()
     {
         JsonSaveDAO json = new JsonSaveDAO(Application.persistentDataPath);
-        json.updateCurrentLevel(SceneManager.GetActiveScene().name);
-        Debug.Log(SceneManager.GetActiveScene().name);
+        json.updateCurrentLevel(levels[SceneManager.GetActiveScene().buildIndex]);
         Time.timeScale = 1;
         LevelSelect.loadMainMenu(this);
         CameraLimits.gameOverFallCamera = false;

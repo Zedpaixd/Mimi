@@ -10,7 +10,6 @@ public class Storytelling : MonoBehaviour
     public UiManager uiManager;
     public PlayerState playerState;
     private bool endStoryStarted;
-    private bool endStoryFinished;
 
     void Start()
     {
