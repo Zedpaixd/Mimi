@@ -229,12 +229,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         var coldirection = transform.InverseTransformPoint(col.transform.position);
-
-        if (col.collider.CompareTag("head") && AttackCollision.instance.Attacked)
-        {
-            AttackJump();
-            //Debug.Log("Hit the top");
-        }
     }
 
     void OnCollisionStay2D(Collision2D col)
@@ -336,39 +330,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Attack and hit movement
-    void AttackJump()
-    {
-        Vector2 forceDirection;
 
-        if (direction == 0)
-        {
-            direction = tmpDirect;
-        }
-
-        if (direction > 0)
-        {
-            forceDirection = new Vector2(0.1f, 0.1f);
-        }
-        else
-        {
-            forceDirection = new Vector2(-0.1f, 0.1f);
-        }
-
-        //Vector2 forceDirection = new Vector2(0.2f, 0.2f);
-        float forceMagnitude = 15.0f;
-        moveSpeed = 1.5f;
-        Vector2 force = forceMagnitude * forceDirection;
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        if (rb.velocity.magnitude > maxMoveSpeed)
-        {
-            rb.velocity = new Vector3(rb.velocity.x / 1.1f, rb.velocity.y / 1.1f);
-        }
-        else
-        {
-            rb.AddForce(force, ForceMode2D.Impulse);
-        }
-    }
 
     // Hit movement
-   
+
 }
