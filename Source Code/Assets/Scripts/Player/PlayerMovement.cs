@@ -253,11 +253,13 @@ public class PlayerMovement : MonoBehaviour
         GameObject secretArea = other.gameObject;
         if (secretArea.CompareTag(Globals.SECRET_AREA_TAG))
         {
+            Debug.Log(secretArea.name);
             if (secretArea.name == "SecretAreaWall" && !secretArea1)
             {
                 secretArea1 = true;
                 FadeOut(secretArea);
-                Fitting.SetActive(true);
+                //Fitting.SetActive(true);
+                Fitting2.SetActive(true);
                 HiddenCollectable1.SetActive(true);
 
             }
@@ -265,11 +267,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 secretArea2 = true;
                 FadeOut(secretArea);
-                Fitting.SetActive(false);
+                //Fitting.SetActive(true);
                 Fitting2.SetActive(false);
                 Fitting3.SetActive(true);
                 HiddenCollectable2.SetActive(true);
             }
+
+            bool tmp = Fitting.activeSelf;
+            tmp = tmp ? false : true;
+            Fitting.SetActive(tmp);
         }
     }
 
@@ -290,6 +296,9 @@ public class PlayerMovement : MonoBehaviour
                 secretArea2 = false;
                 FadeIn(secretArea);
             }
+            bool tmp = Fitting.activeSelf;
+            tmp = tmp ? false : true;
+            Fitting.SetActive(tmp);
         }
     }
 
