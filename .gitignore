@@ -63,3 +63,5 @@ crashlytics-build.properties
 /Assets/Editor/x64
 /Assets/Editor/x64.meta
 *.rar
+Source Code/UserSettings/EditorUserSettings.asset
+Source Code/UserSettings/Layouts/default-2021.dwlt
