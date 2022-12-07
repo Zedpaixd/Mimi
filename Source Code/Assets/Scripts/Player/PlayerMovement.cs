@@ -55,7 +55,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isCrouching;
 
     [Header("Secret Areas")]
-    private bool secretAreaTest = false;
+    private bool secretArea1 = false;
+    private bool secretArea2 = false;
     public GameObject Fitting;
     public GameObject Fitting2;
     public GameObject Fitting3;
@@ -252,18 +253,18 @@ public class PlayerMovement : MonoBehaviour
         GameObject secretArea = other.gameObject;
         if (secretArea.CompareTag(Globals.SECRET_AREA_TAG))
         {
-            if (secretArea.name == "SecretAreaWall" && !secretAreaTest)
+            if (secretArea.name == "SecretAreaWall" && !secretArea1)
             {
-                secretAreaTest = true;
+                secretArea1 = true;
                 FadeOut(secretArea);
                 //Fitting.SetActive(true);
                 Fitting2.SetActive(true);
                 HiddenCollectable1.SetActive(true);
 
             }
-            else if (secretArea.name == "SecretAreaWall (1)" && !secretAreaTest)
+            else if (secretArea.name == "SecretAreaWall (1)" && !secretArea2)
             {
-                secretAreaTest = true;
+                secretArea2 = true;
                 FadeOut(secretArea);
                 //Fitting.SetActive(true);
                 Fitting2.SetActive(false);
@@ -283,16 +284,17 @@ public class PlayerMovement : MonoBehaviour
         if (secretArea.CompareTag(Globals.SECRET_AREA_TAG))
         {
             Debug.Log("You left the secret area.");
-            if (secretArea.name == "SecretAreaWall" && secretAreaTest)
+            if (secretArea.name == "SecretAreaWall" && secretArea1)
             {
-                secretAreaTest = false;
+                secretArea1 = false;
                 FadeIn(secretArea);
             }
-            else if (secretArea.name == "SecretAreaWall (1)" && secretAreaTest)
+            else if (secretArea.name == "SecretAreaWall (1)" && secretArea2)
             {
-                secretAreaTest = false;
+                secretArea2 = false;
                 FadeIn(secretArea);
             }
+
             bool tmp = Fitting.activeSelf;
             tmp = tmp ? false : true;
             Fitting.SetActive(tmp);
