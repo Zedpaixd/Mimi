@@ -32,10 +32,12 @@ public class UiManager : MonoBehaviour
     {
         if (fillAmount > Life.fillAmount)
         {
+            StopAllCoroutines();
             StartCoroutine(increaseHearth(fillAmount - Life.fillAmount));
         }
         else
         {
+            StopAllCoroutines();
             StartCoroutine(decreaseHearth(Life.fillAmount - fillAmount));
         }
     }

@@ -24,17 +24,19 @@ public class SaturationManager : MonoBehaviour
     // Start is called before the first frame update
     public void IncreaseSaturation(float levelSaturation, float second)
     {
-                Debug.Log("LEVEL SATURATION" + levelSaturation);
+        Debug.Log("LEVEL SATURATION" + levelSaturation);
 
-       // if (color.saturation.value + levelSaturation <= 0f)
-            StartCoroutine(SaturationPlus(levelSaturation, second));
+        // if (color.saturation.value + levelSaturation <= 0f)
+        StopAllCoroutines();
+        StartCoroutine(SaturationPlus(levelSaturation, second));
     }
     public void DecreaseSaturation(float levelSaturation, float second)
     {
-                Debug.Log("LEVEL SATURATION" + levelSaturation);
+        Debug.Log("LEVEL SATURATION" + levelSaturation);
 
-       // if (color.saturation.value - levelSaturation > -100f)
-            StartCoroutine(SaturationLess(levelSaturation, second));
+        // if (color.saturation.value - levelSaturation > -100f)
+        StopAllCoroutines();
+        StartCoroutine(SaturationLess(levelSaturation, second));
     }
     public void UpdateSaturation(float levelSaturation, float second)
     {
@@ -53,7 +55,7 @@ public class SaturationManager : MonoBehaviour
     {
         float beginValue = color.saturation.value;
 
-        while (color.saturation.value < beginValue + levelSaturation&&color.saturation.value<0f)
+        while (color.saturation.value < beginValue + levelSaturation && color.saturation.value < 0f)
         {
             color.saturation.value += levelSaturation * Time.smoothDeltaTime;
             yield return new WaitForSecondsRealtime(second * Time.unscaledDeltaTime);

@@ -85,10 +85,10 @@ public class PlayerState : MonoBehaviour
         if ((col.collider.CompareTag("enemy") || col.collider.CompareTag("ivy")) && isHitable)
         {
             StartCoroutine(hitWithDelay(hitDelay));
+            StartCoroutine(OpacityFlickering(hitDelay / 4f));
             saturation.DecreaseSaturation(100f / HeartFillTotal, 0.2f);
             playerUi.UpdateHeart(colorItemCount / HeartFillTotal);
             playerUi.SetGameOverScreenVisible(colorItemCount < 0);
-            StartCoroutine("FadeFlickCoroutine");
         }
         else
         if (col.collider.CompareTag("head") && isHitable)
@@ -97,24 +97,25 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    IEnumerator FadeFlickCoroutine()
+    IEnumerator OpacityFlickering(float frequency)
     {
-        foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>())
+        while (!isHitable)
         {
-            Debug.Log(sprite.name);
-            Color c = sprite.color;
-            c.a = 0;
-            sprite.color = c;
+            foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                Color color = sprite.material.color;
+                color.a = color.a == 0.1f ? 1f : 0.1f;
+                sprite.material.color = color;
+            }
+
+            yield return new WaitForSeconds(frequency);
         }
 
-        yield return new WaitForSeconds(hitDelay);
-
-        foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>())
+        foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>(true))
         {
-            Debug.Log(sprite.name);
-            Color c = sprite.color;
-            c.a = 1;
-            sprite.color = c;
+            Color color = sprite.material.color;
+            color.a = 1f;
+            sprite.material.color = color;
         }
     }
 
