@@ -18,6 +18,8 @@ public class PlayerState : MonoBehaviour
     [SerializeField] AudioClip hitSound;
     [SerializeField] AudioClip deathSound;
     [SerializeField] SaturationManager saturation;
+    [SerializeField] float repulsePlayerAttack = 1.6f;
+
     AudioSource mimiSource;
     float xSpawnPos;
     float ySpawnPos;
@@ -86,8 +88,16 @@ public class PlayerState : MonoBehaviour
             playerUi.UpdateHeart(colorItemCount / HeartFillTotal);
             playerUi.SetGameOverScreenVisible(colorItemCount < 0);
         }
+        else
+        if (col.collider.CompareTag("head") && isHitable)
+        {
+            AttackJump();
+        }
     }
-
+    void AttackJump()
+    {
+        GetComponent<Rigidbody2D>().AddForce(Vector2.up * repulsePlayerAttack, ForceMode2D.Impulse);
+    }
     IEnumerator hitWithDelay(float delay)
     {
         HitJump();
@@ -107,9 +117,8 @@ public class PlayerState : MonoBehaviour
     void HitJump()
     {
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        float forceMagnitude = 3.0f;
         int faceLeftRight = transform.localScale.x > 0 ? 1 : -1;
-        rb.AddForce((-faceLeftRight * Vector2.right + Vector2.up).normalized * forceMagnitude, ForceMode2D.Impulse);
+        rb.AddForce((-faceLeftRight * Vector2.right).normalized * repulsePlayerAttack, ForceMode2D.Impulse);
     }
 
 

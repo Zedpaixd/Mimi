@@ -109,9 +109,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1898
-        width: 626
-        height: 949
+        y: 1878
+        width: 622
+        height: 939
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,10 +129,10 @@ TextureImporter:
       name: Ennemy_1
       rect:
         serializedVersion: 2
-        x: 626
-        y: 1898
-        width: 626
-        height: 949
+        x: 622
+        y: 1878
+        width: 622
+        height: 939
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +150,10 @@ TextureImporter:
       name: Ennemy_2
       rect:
         serializedVersion: 2
-        x: 1252
-        y: 1898
-        width: 626
-        height: 949
+        x: 1244
+        y: 1878
+        width: 622
+        height: 939
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,10 +171,10 @@ TextureImporter:
       name: Ennemy_3
       rect:
         serializedVersion: 2
-        x: 1878
-        y: 1898
-        width: 626
-        height: 949
+        x: 1866
+        y: 1878
+        width: 622
+        height: 939
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,9 +193,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 949
-        width: 626
-        height: 949
+        y: 939
+        width: 622
+        height: 939
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,10 +213,10 @@ TextureImporter:
       name: Ennemy_5
       rect:
         serializedVersion: 2
-        x: 626
-        y: 949
-        width: 626
-        height: 949
+        x: 622
+        y: 939
+        width: 622
+        height: 939
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,10 +234,10 @@ TextureImporter:
       name: Ennemy_6
       rect:
         serializedVersion: 2
-        x: 1252
-        y: 949
-        width: 626
-        height: 949
+        x: 1244
+        y: 939
+        width: 622
+        height: 939
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,10 +255,10 @@ TextureImporter:
       name: Ennemy_7
       rect:
         serializedVersion: 2
-        x: 1878
-        y: 949
-        width: 626
-        height: 949
+        x: 1866
+        y: 939
+        width: 622
+        height: 939
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,8 +278,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 626
-        height: 949
+        width: 622
+        height: 939
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
