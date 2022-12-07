@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerState : MonoBehaviour
 {
@@ -87,6 +88,7 @@ public class PlayerState : MonoBehaviour
             saturation.DecreaseSaturation(100f / HeartFillTotal, 0.2f);
             playerUi.UpdateHeart(colorItemCount / HeartFillTotal);
             playerUi.SetGameOverScreenVisible(colorItemCount < 0);
+            StartCoroutine("FadeFlickCoroutine");
         }
         else
         if (col.collider.CompareTag("head") && isHitable)
@@ -94,10 +96,30 @@ public class PlayerState : MonoBehaviour
             AttackJump();
         }
     }
+
+    IEnumerator FadeFlickCoroutine()
+    {
+        float x = 0.1f;
+        while (!isHitable)
+        {
+            foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>())
+            {
+                Color c=sprite.color;
+                c.a = x;
+                sprite.color = c;
+                if (x == 0.1f) x = 1;
+                else x = 0.1f;
+            }
+
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
     void AttackJump()
     {
         GetComponent<Rigidbody2D>().AddForce(Vector2.up * repulsePlayerAttack, ForceMode2D.Impulse);
     }
+
     IEnumerator hitWithDelay(float delay)
     {
         HitJump();

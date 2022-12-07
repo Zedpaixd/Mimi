@@ -252,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject secretArea = other.gameObject;
         if (secretArea.CompareTag(Globals.SECRET_AREA_TAG))
         {
-            if (secretArea.name == "SecretAreaWall" && !secretArea)
+            if (secretArea.name == "SecretAreaWall" && !secretAreaTest)
             {
                 secretAreaTest = true;
                 FadeOut(secretArea);
