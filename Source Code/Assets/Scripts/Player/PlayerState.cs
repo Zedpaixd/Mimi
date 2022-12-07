@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerState : MonoBehaviour
 {
@@ -84,6 +85,7 @@ public class PlayerState : MonoBehaviour
         if ((col.collider.CompareTag("enemy") || col.collider.CompareTag("ivy")) && isHitable)
         {
             StartCoroutine(hitWithDelay(hitDelay));
+            StartCoroutine(OpacityFlickering(hitDelay / 4f));
             saturation.DecreaseSaturation(100f / HeartFillTotal, 0.2f);
             playerUi.UpdateHeart(colorItemCount / HeartFillTotal);
             playerUi.SetGameOverScreenVisible(colorItemCount < 0);
@@ -94,10 +96,34 @@ public class PlayerState : MonoBehaviour
             AttackJump();
         }
     }
+
+    IEnumerator OpacityFlickering(float frequency)
+    {
+        while (!isHitable)
+        {
+            foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                Color color = sprite.material.color;
+                color.a = color.a == 0.1f ? 1f : 0.1f;
+                sprite.material.color = color;
+            }
+
+            yield return new WaitForSeconds(frequency);
+        }
+
+        foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>(true))
+        {
+            Color color = sprite.material.color;
+            color.a = 1f;
+            sprite.material.color = color;
+        }
+    }
+
     void AttackJump()
     {
         GetComponent<Rigidbody2D>().AddForce(Vector2.up * repulsePlayerAttack, ForceMode2D.Impulse);
     }
+
     IEnumerator hitWithDelay(float delay)
     {
         HitJump();
