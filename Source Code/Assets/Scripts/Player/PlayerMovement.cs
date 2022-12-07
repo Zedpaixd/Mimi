@@ -55,8 +55,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isCrouching;
 
     [Header("Secret Areas")]
-    private bool secretArea1 = false;
-    private bool secretArea2 = false;
+    private bool secretAreaTest = false;
     public GameObject Fitting;
     public GameObject Fitting2;
     public GameObject Fitting3;
@@ -253,17 +252,17 @@ public class PlayerMovement : MonoBehaviour
         GameObject secretArea = other.gameObject;
         if (secretArea.CompareTag(Globals.SECRET_AREA_TAG))
         {
-            if (secretArea.name == "SecretAreaWall" && !secretArea1)
+            if (secretArea.name == "SecretAreaWall" && !secretArea)
             {
-                secretArea1 = true;
+                secretAreaTest = true;
                 FadeOut(secretArea);
                 Fitting.SetActive(true);
                 HiddenCollectable1.SetActive(true);
 
             }
-            else if (secretArea.name == "SecretAreaWall (1)" && !secretArea2)
+            else if (secretArea.name == "SecretAreaWall (1)" && !secretAreaTest)
             {
-                secretArea2 = true;
+                secretAreaTest = true;
                 FadeOut(secretArea);
                 Fitting.SetActive(false);
                 Fitting2.SetActive(false);
@@ -279,15 +278,14 @@ public class PlayerMovement : MonoBehaviour
         if (secretArea.CompareTag(Globals.SECRET_AREA_TAG))
         {
             Debug.Log("You left the secret area.");
-            if (secretArea.name == "SecretAreaWall" && secretArea1)
+            if (secretArea.name == "SecretAreaWall" && secretAreaTest)
             {
-                secretArea1 = false;
+                secretAreaTest = false;
                 FadeIn(secretArea);
             }
-            else if (secretArea.name == "SecretAreaWall (1)" && secretArea2)
+            else if (secretArea.name == "SecretAreaWall (1)" && secretAreaTest)
             {
-                Debug.Log("You left the secret area.");
-                secretArea2 = false;
+                secretAreaTest = false;
                 FadeIn(secretArea);
             }
         }
