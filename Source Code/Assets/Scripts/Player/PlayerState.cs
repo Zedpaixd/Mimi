@@ -99,19 +99,22 @@ public class PlayerState : MonoBehaviour
 
     IEnumerator FadeFlickCoroutine()
     {
-        float x = 0.1f;
-        while (!isHitable)
+        foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>())
         {
-            foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>())
-            {
-                Color c=sprite.color;
-                c.a = x;
-                sprite.color = c;
-                if (x == 0.1f) x = 1;
-                else x = 0.1f;
-            }
+            Debug.Log(sprite.name);
+            Color c = sprite.color;
+            c.a = 0;
+            sprite.color = c;
+        }
 
-            yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(hitDelay);
+
+        foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>())
+        {
+            Debug.Log(sprite.name);
+            Color c = sprite.color;
+            c.a = 1;
+            sprite.color = c;
         }
     }
 

@@ -84143,6 +84143,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.12787533
       objectReference: {fileID: 0}
+    - target: {fileID: 4600698886374659802, guid: e40bb6670d4f97144aaeb93e9f7903d2, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6741161509247941575, guid: e40bb6670d4f97144aaeb93e9f7903d2, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9876981
