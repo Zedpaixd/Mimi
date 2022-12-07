@@ -62,6 +62,8 @@ SpriteAtlas:
   - {fileID: 908028155, guid: 75402a840c22d5149a8b5aa996ca1e5b, type: 3}
   - {fileID: -925672235, guid: 75402a840c22d5149a8b5aa996ca1e5b, type: 3}
   - {fileID: 21300000, guid: d7176494ff7314cfaa7f3cb76d1a70d7, type: 3}
+  - {fileID: 21300000, guid: 89fe52e41227343f5a376db4533a63fb, type: 3}
+  - {fileID: 21300000, guid: 1c0c90c59e90f4a14a96ec1f9e979909, type: 3}
   - {fileID: 2052137122, guid: 0247dac51f685504a86423bb04ada126, type: 3}
   - {fileID: -1903765268, guid: 0247dac51f685504a86423bb04ada126, type: 3}
   - {fileID: 1361607842, guid: 0247dac51f685504a86423bb04ada126, type: 3}
@@ -122,6 +124,8 @@ SpriteAtlas:
   - MashroomOrange_0
   - MashroomOrange_1
   - Tree
+  - WoodhiddenSign_Down
+  - WoodHiddenSign_Right
   - ForestAssets_10
   - ForestAssets_2
   - ForestAssets_3

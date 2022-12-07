@@ -256,7 +256,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 secretAreaTest = true;
                 FadeOut(secretArea);
-                Fitting.SetActive(true);
+                //Fitting.SetActive(true);
+                Fitting2.SetActive(true);
                 HiddenCollectable1.SetActive(true);
 
             }
@@ -264,11 +265,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 secretAreaTest = true;
                 FadeOut(secretArea);
-                Fitting.SetActive(false);
+                //Fitting.SetActive(true);
                 Fitting2.SetActive(false);
                 Fitting3.SetActive(true);
                 HiddenCollectable2.SetActive(true);
             }
+
+            bool tmp = Fitting.activeSelf;
+            tmp = tmp ? false : true;
+            Fitting.SetActive(tmp);
         }
     }
 
@@ -288,6 +293,9 @@ public class PlayerMovement : MonoBehaviour
                 secretAreaTest = false;
                 FadeIn(secretArea);
             }
+            bool tmp = Fitting.activeSelf;
+            tmp = tmp ? false : true;
+            Fitting.SetActive(tmp);
         }
     }
 
