@@ -10,6 +10,10 @@ public class LevelSelect : MonoBehaviour
     {
         instance.StartCoroutine(loadLevelAsync(level));
     }
+    public void LoadLevel(string level)
+    {
+        StartCoroutine(loadLevelAsync(level));
+    }
 
     public void Back()
     {
