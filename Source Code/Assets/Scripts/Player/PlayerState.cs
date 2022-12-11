@@ -122,6 +122,7 @@ public class PlayerState : MonoBehaviour
     void AttackJump()
     {
         GetComponent<Rigidbody2D>().AddForce(Vector2.up * repulsePlayerAttack, ForceMode2D.Impulse);
+        mimiSource.PlayOneShot(hitSound);
     }
 
     IEnumerator hitWithDelay(float delay)
