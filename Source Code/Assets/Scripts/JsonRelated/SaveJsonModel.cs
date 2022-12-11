@@ -17,8 +17,8 @@ public class SaveJsonModel
 
     public SaveJsonModel()
     {
-        this.musicVolume = 0;
-        this.sfxVolume = 0;
+        this.musicVolume = 0.5f;
+        this.sfxVolume = 0.5f;
         this.currentLevel = "Level 1";
     }
 

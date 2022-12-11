@@ -17,7 +17,7 @@ public class UiLevelSelector : MonoBehaviour
         levelButtons.ForEach(button => button.interactable = false);
 
         int lastLevelIndex = SceneUtility.GetBuildIndexByScenePath("Scenes/" + save.getCurrentLevelFromJson());
-        for (int i = 0; i <= lastLevelIndex; i++)
+        for (int i = 0; i < lastLevelIndex; i++)
         {
             if (i < levelButtons.Count)
                 levelButtons[i].interactable = true;
